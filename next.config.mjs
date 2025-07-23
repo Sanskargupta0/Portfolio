@@ -32,47 +32,47 @@ const nextConfig = {
       },
       {
         source: "/linkedin",
-        destination: "https://www.linkedin.com/in/ayush-that/",
+        destination: "https://www.linkedin.com/in/Sanskargupta0/",
         permanent: true,
       },
       {
         source: "/github",
-        destination: "https://github.com/ayush-that",
+        destination: "https://github.com/SanskarGupta0",
         permanent: true,
       },
       {
         source: "/support",
-        destination: "https://buymeacoffee.com/shydev69",
+        destination: "https://buymeacoffee.com/SanskarGupta0",
         permanent: true,
       },
       {
         source: "/instagram",
-        destination: "https://www.instagram.com/fitlesshot/",
+        destination: "https://www.instagram.com/Sanskar362002/",
         permanent: true,
       },
       {
         source: "/twitter",
-        destination: "https://x.com/shydev69",
+        destination: "https://x.com/Sanskar362002",
         permanent: true,
       },
       {
         source: "/youtube",
-        destination: "https://www.youtube.com/@ayush-that",
+        destination: "https://www.youtube.com/@sanskargupta9454",
         permanent: true,
       },
       {
         source: "/x",
-        destination: "https://www.x.com/shydev69",
+        destination: "https://www.x.com/Sanskar362002",
         permanent: true,
       },
       {
         source: "/peerlist",
-        destination: "https://peerlist.io/shydev69",
+        destination: "https://peerlist.io/sanskargupta0",
         permanent: true,
       },
       {
         source: "/discord",
-        destination: "https://discord.com/users/fitlesshot",
+        destination: "https://discord.com/users/Sanskargupta0",
         permanent: true,
       },
     ];

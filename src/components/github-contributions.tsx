@@ -6,7 +6,7 @@ const GitHubContributions = () => {
   return (
     <div className="w-full">
       <GitHubCalendar
-        username="ayush-that"
+        username="SanskarGupta0"
         colorScheme="dark"
         fontSize={12}
         blockSize={12}
