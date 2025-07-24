@@ -17,6 +17,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
   deployedURL,
   cover,
   stacks,
+  categories,
   isRepo,
   repoUrl,
 }) => {
@@ -36,9 +37,22 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
         <hgroup className="space-y-2 sm:space-y-1">
           <h2 className="font-ubuntu text-base font-medium">{title}</h2>
 
-          <p className={"text-xs text-ring"} aria-label="project stacks">
-            {stacks.join(" / ")}
-          </p>
+          <div className="space-y-2">
+            <p className={"text-xs text-ring"} aria-label="project stacks">
+              {stacks.join(" / ")}
+            </p>
+            
+            <div className="flex flex-wrap gap-1" aria-label="project categories">
+              {categories.map((category) => (
+                <span
+                  key={category}
+                  className="px-2 py-0.5 text-xs rounded-full bg-accent text-accent-foreground capitalize"
+                >
+                  {category.replace('-', ' ')}
+                </span>
+              ))}
+            </div>
+          </div>
 
           <p className={cn(typo({ variant: "paragraph", size: "sm" }), "!mt-4 line-clamp-2")}>
             {description}

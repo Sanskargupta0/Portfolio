@@ -5,7 +5,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "~/components/ui/input";
 
-const SearchInput = () => {
+interface SearchInputProps {
+  projects?: boolean;
+}
+
+const SearchInput = ({ projects }: SearchInputProps) => {
   const { t } = useTranslation("common");
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -25,7 +29,7 @@ const SearchInput = () => {
       <Search className="absolute left-2 top-2/4 size-4 -translate-y-2/4 text-muted-foreground" />
       <Input
         type="search"
-        placeholder={t("blog.searchPlaceholder")}
+        placeholder={t(projects?"Search Projects":"blog.searchPlaceholder")}
         className="w-full rounded-lg bg-background pl-8"
         defaultValue={searchParams.get("search")?.toString()}
         onChange={onChangeHandle}
