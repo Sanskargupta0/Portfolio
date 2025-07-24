@@ -49,7 +49,7 @@ export const getSEOTags = ({
       title: openGraph?.title || config.appName,
       description: openGraph?.description || config.appDescription,
       card: "summary_large_image",
-      creator: "@FaisalTari78554",
+      creator: "@Sanskar362002",
     },
 
     ...(canonicalUrlRelative && {
@@ -79,8 +79,8 @@ export const renderSchemaTags = () => {
           dateModified: "2023-12-26T14:53:00-05:00",
           mainEntity: {
             "@type": "Person",
-            name: "Faisal Tariq",
-            alternateName: "faisal_griz",
+            name: "Sanskar Gupta",
+            alternateName: "Sanskar362002",
             identifier: "123475623",
             interactionStatistic: [
               {

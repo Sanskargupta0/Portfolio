@@ -1,173 +1,220 @@
 import { createId } from "@paralleldrive/cuid2";
-import { ChainGpt } from "~/assets/svg";
 
 // Project cover images
-import nykaaCover from "~/assets/images/cover/nykaa-product-advisor.png";
-import finvedaCover from "~/assets/images/cover/finveda.png";
-import solopongCover from "~/assets/images/cover/solopong.png";
-import whatsmytrashCover from "~/assets/images/cover/whatsmytrash.png";
-import mathcamCover from "~/assets/images/cover/mathcam.png";
-import desinftCover from "~/assets/images/cover/desinft.png";
-import cryptoniclabsCover from "~/assets/images/cover/cryptonic-labs.png";
-import wattxCover from "~/assets/images/cover/wattx.png";
-import typingCover from "~/assets/images/cover/100xtyping.png";
-import cookinghubCover from "~/assets/images/cover/cookinghub.png";
-import kooberCover from "~/assets/images/cover/koober.png";
-import webstCover from "~/assets/images/cover/webst.png";
-
+import studdyBuddyAiCover from "~/assets/images/cover/StuddyBuddyAi.png";
+import ymgsPharmacyCover from "~/assets/images/cover/YMGS-Pharmacy.png";
+import printifyCover from "~/assets/images/cover/Printify.png";
+import nationhubCover from "~/assets/images/cover/NationsHub.png";
+import httpServerCover from "~/assets/images/cover/HTTPServer.png";
+import facequestCover from "~/assets/images/cover/FaceQuest.png";
+import removeBgCover from "~/assets/images/cover/RemoveBg.png";
+import sendEmailApiCover from "~/assets/images/cover/SendEmailApi.png";
+import jcValvesCover from "~/assets/images/cover/JcValves.png";
+import travelCover from "~/assets/images/cover/Travel.png";
+import aiSummarizeCover from "~/assets/images/cover/AiSummarize.png";
+import justYouAndMeCover from "~/assets/images/cover/JustYouAndMe.png";
+import gamesUsingJsCover from "~/assets/images/cover/GamesUsingJs.png";
 const projects = [
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `Nykaa Product Advisor`,
+    title: `Studdy-Buddy`,
     description:
-      "Web scraping application enhanced with AI that helps users to find the best product for their skin type and concerns.",
-    deployedURL: "https://nykaa-product-advisor.onrender.com/",
-    cover: nykaaCover,
-    stacks: ["Python", "Selenium", "Beautiful Soup", "Tailwind CSS", "Flask", "Gemini"],
+      "AI-powered study companion platform that generates comprehensive study materials including notes, flashcards, quizzes, and Q&A sessions from any topic using Google Gemini AI.",
+    deployedURL: "https://studdybuddyai.vercel.app/",
+    cover: studdyBuddyAiCover,
+    stacks: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Clerk",
+      "Stripe",
+      "Google Gemini AI",
+      "Inngest",
+    ],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/Nykaa-Product-Advisor",
+    repoUrl: "https://github.com/Sanskargupta0/Studdy-Buddy",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `DesiNFT`,
+    title: `YMGS Pharmacy`,
     description:
-      "NFT marketplace promoting Indian culture. Mint, buy and sell NFTs with a user-friendly, responsive interface.",
-    stacks: ["Next.js", "Tailwind CSS", "Polygon", "Solidity", "Chai.js"],
-    cover: desinftCover,
+      "Modern e-commerce platform for online medicine and healthcare product delivery. Built with React and Vite, featuring advanced product catalog, multiple payment methods, guest checkout, and comprehensive order management.",
+    deployedURL: "https://ymgs-frontend.vercel.app/",
+    cover: ymgsPharmacyCover,
+    stacks: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "React Router DOM",
+      "Axios",
+      "Lucide React",
+      "Swiper.js",
+      "React Toastify",
+      "Razorpay",
+      "Stripe",
+    ],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/HackOn-Blocks-2024",
-    deployedURL: "https://desinft.vercel.app/",
+    repoUrl: "https://github.com/Sanskargupta0/YMGS-Frontend",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `Cryptonic Labs`,
-    cover: cryptoniclabsCover,
+    title: `HTTP Server (Go)`,
     description:
-      "Dark-themed modern animated agency landing page with integrated content management system.",
-    stacks: ["Next.js", "GSAP", "Framer", "Tailwind CSS", "Sanity.io"],
+      "Educational Go project for building an HTTP/1.1 server from scratch. Implements TCP server, HTTP request parsing, and multi-client support as part of the CodeCrafters challenge.",
+    deployedURL: "https://app.codecrafters.io/users/Sanskargupta0",
+    cover: httpServerCover,
+    stacks: ["Go", "TCP", "HTTP/1.1"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/Cryptonic-Labs",
-    deployedURL: "https://cryptoniclabs.com/",
+    repoUrl: "https://github.com/Sanskargupta0/HTTP-Server-go",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `WattX`,
+    title: `FaceQuest`,
     description:
-      "Landing page for a blockchain-based energy trading platform with a modern design and smooth animations.",
-    stacks: ["Next.js", "Framer", "Tailwind CSS", "Clerk"],
-    cover: wattxCover,
+      "Python-based Telegram bot for face image search and verification. Supports user uploads, selfie verification, database storage, and multi-user handling. Uses dlib and face_recognition for image processing.",
+    deployedURL: "https://t.me/FaceQuest_Bot",
+    cover: facequestCover,
+    stacks: ["Python", "Telegram Bot API", "dlib", "face_recognition", "SQLite"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/WattX",
-    deployedURL: "https://watt-x.vercel.app/",
+    repoUrl: "https://github.com/your-username/facequest",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `Koober`,
+    title: `Printify`,
     description:
-      "Your personal financial adviosr powered by AI. Delivers advice tailored to your unique income, budget, and expenses.",
-    stacks: ["Next.js", "PostgreSQL", "Tailwind CSS", "TypeScript", "Gemini"],
-    cover: kooberCover,
+      "Dynamic React-based web application for product management and quotation generation. Features customizable product listings, email integration for quotation requests, PDF download, search, similar product suggestions, and interactive UI with animations.",
+    deployedURL: "https://printify-five.vercel.app/",
+    cover: printifyCover,
+    stacks: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "AOS",
+      "HTML2PDF.js",
+      "React Router Dom",
+      "React Icons",
+      "React Slick Carousel",
+      "React Toastify",
+      "Styled Components",
+    ],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/Live-The-Code-3.0",
-    deployedURL: "https://koober.vercel.app/",
+    repoUrl: "https://github.com/Sanskargupta0/Printify",
   },
-
+    {
+    id: createId(),
+    title: `Remove Background`,
+    description:
+      "Web-based AI application for automatic background removal from images. Built with Flask, rembg (U2-Net), and TailwindCSS. Features batch processing, drag-and-drop, Unsplash API integration, Docker deployment, and modern responsive UI.",
+    deployedURL: "https://remove-bg-rv88.onrender.com/",
+    cover: removeBgCover,
+    stacks: [
+      "Flask",
+      "Python",
+      "rembg",
+      "U2-Net",
+      "OpenCV",
+      "Pillow",
+      "ONNX Runtime",
+      "TailwindCSS",
+      "Docker",
+      "Gunicorn",
+      "Unsplash API",
+    ],
+    isRepo: true,
+    repoUrl: "https://github.com/Sanskargupta0/Remove-bg",
+  },
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `WebST`,
+    title: `Nations Hub`,
     description:
-      "Web terminal interface that replicates my home build's st terminal. Supports over 50 unique commands.",
-    stacks: ["Next.js", "Tailwind CSS", "TypeScript"],
-    cover: webstCover,
+      "Interactive React app to explore country information, flags, and play geography quiz games. Features search, flag gallery, and multiple quiz modes using REST Countries API.",
+    deployedURL: "https://nations-hub-phi.vercel.app/",
+    cover: nationhubCover,
+    stacks: ["React.js", "HTML5", "CSS3", "JavaScript", "REST Countries API"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/msc-project",
-    deployedURL: "https://mscproject-drab.vercel.app/",
+    repoUrl: "https://github.com/Sanskargupta0/Nations-Hub",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `FinVeda`,
+    title: `SendMail API`,
     description:
-      "Dynamic financial literacy platform with AI advisor, blogs, trends, calculators, and a quiz for effortless finance learning.",
-    deployedURL: "https://finveda.vercel.app/",
-    cover: finvedaCover,
-    stacks: ["HTML", "CSS", "JavaScript", "BootStrap", "ChatGPT"],
+      "Node.js and Express API for sending dynamic emails with attachments and customizable templates. Supports Gmail OAuth2, secure environment config, and endpoints for subscription, contact, and quotation emails.",
+    deployedURL: "https://email-send-api-67qp.onrender.com/",
+    cover: sendEmailApiCover,
+    stacks: ["Node.js", "Express", "Nodemailer", "OAuth2", "dotenv"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/FinVeda",
+    repoUrl: "https://github.com/Sanskargupta0/Email-Send-API",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `WhatsMyTrash`,
+    title: `DNS Server (Go)`,
     description:
-      "Web app that helps users to identify the type of waste they have and how to dispose of it properly.",
-    stacks: ["Python", "Flask", "TensorFlow", "Keras", "BootStrap"],
-    cover: whatsmytrashCover,
+      "Educational Go project for building a DNS server from scratch. Implements DNS packet parsing, query handling, record types, and recursive resolution as part of the CodeCrafters challenge.",
+    deployedURL: "https://app.codecrafters.io/users/Sanskargupta0",
+    cover: httpServerCover,
+    stacks: ["Go", "DNS", "UDP", "Networking"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/IOSC_whatsmytrash",
+    repoUrl: "https://github.com/Sanskargupta0/DNS-Server-go",
   },
-
   {
     id: createId(),
-    title: "MathCam",
-    Icon: ChainGpt,
+    title: `JC Valves MTC Manager`,
     description:
-      "Apple calculator inspired math-solver that uses Computer Vision and AI to solve mathematical problems.",
+      "Enterprise-grade Flask web app for managing Material Test Certificates (MTC) in the valve manufacturing industry. Features role-based access, PDF generation, version control, advanced material property tracking, and supplier MTC management.",
+    deployedURL: "https://sanskargupta0.pythonanywhere.com/",
+    cover: jcValvesCover,
+    stacks: ["Flask", "SQLAlchemy", "Bootstrap", "Jinja2", "Python", "SQLite", "Flask-Login", "Flask-Migrate"],
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/Apple-Calculator-Using-Computer-Vision",
-    cover: mathcamCover,
-    stacks: ["Python", "Flask", "OpenCV", "Gemini"],
+    repoUrl: "https://github.com/Sanskargupta0/jcvalves",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `100xTyping`,
+    title: `Travel UI UX`,
     description:
-      "Minimal terminal themed Typing Test. Returns WPM and accuracy. Dark mode available.",
+      "Modern Next.js and Tailwind CSS travel website UI/UX demo. Features hero, camp exploration, travel guide, feature-rich sections, mobile app CTA, and responsive design.",
+    deployedURL: "https://sanskarguptadev.vercel.app/",
+    cover: travelCover,
+    stacks: ["Next.js", "Tailwind CSS"],
+    isRepo: true,
+    repoUrl: "https://github.com/adrianhajdin/travel_ui_ux",
+  },
+  {
+    id: createId(),
+    title: `AI Summarizer`,
+    description:
+      "AI-powered app to condense lengthy articles into concise summaries. Paste an article URL and get an AI-generated summary. Features light/dark mode, local storage, and built with React, Tailwind, and Redux Toolkit Query.",
+    deployedURL: "https://ai-summarizer-one-vert.vercel.app/",
+    cover: aiSummarizeCover,
+    stacks: ["React", "Tailwind", "Rapid API", "Redux Toolkit Query"],
+    isRepo: true,
+    repoUrl: "https://github.com/Sanskargupta0/AI-Summarizer",
+  },
+  {
+    id: createId(),
+    title: `Sorry-I-Can-t-Afford-Flowers`,
+    description:
+      "A playful, interactive HTML & CSS flower garden web app. Personalize with custom messages and names via URL parameters. Features pure CSS animations, glassmorphism, mobile optimization, and glowing effects.",
+    deployedURL: "https://justyouandme.netlify.app/",
+    cover: justYouAndMeCover,
     stacks: ["HTML", "CSS", "JavaScript"],
-    cover: typingCover,
     isRepo: true,
-    repoUrl: "https://github.com/ayush-that/100xTyping",
-    deployedURL: "https://100xtyping.ayush.top/",
+    repoUrl: "https://github.com/Sanskargupta0/Sorry-I-Can-t-Afford-Flowers",
   },
-
   {
     id: createId(),
-    Icon: ChainGpt,
-    title: `SoloPong`,
-    cover: solopongCover,
+    title: `Games_Using_JS`,
     description:
-      "Classic pong game with a twist of Computer Vision. Play against yourself and see how long you can last.",
+      "A collection of classic browser games built using JavaScript, HTML, and CSS. Includes 2D Breakout, Memory Game, Rock Paper Scissors, Sound Game, and Whac-a-mole. Each game is in its own folder for easy exploration.",
+    deployedURL: "https://sanskargupta0.github.io/Memory-Game/",
+    cover: gamesUsingJsCover,
+    stacks: ["JavaScript", "HTML", "CSS"],
     isRepo: true,
-    stacks: ["Python", "Flask", "OpenCV"],
-    repoUrl: "https://github.com/ayush-that/SoloPong",
+    repoUrl: "https://github.com/Sanskargupta0/Games_Using_JS",
   },
 
-  {
-    id: createId(),
-    Icon: ChainGpt,
-    title: `Cooking Hub`,
-    description:
-      "BloatFree Recipe sharing platform where users can learn to cook without encountering ads, trackers or cookies",
-    stacks: ["HTML", "CSS", "JavaScript"],
-    cover: cookinghubCover,
-    isRepo: true,
-    repoUrl: "https://github.com/ayush-that/CookingHub",
-    deployedURL: "https://cooking-hub.vercel.app/",
-  },
 ];
 
 export default projects;

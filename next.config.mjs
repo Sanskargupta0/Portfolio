@@ -27,7 +27,7 @@ const nextConfig = {
       {
         source: "/resume",
         destination:
-          "https://drive.google.com/file/d/1WRDanuhbaiOnniTKr0Ac0IT9oGhX-pYT/view?usp=sharing",
+          "https://github.com/Sanskargupta0/Sanskargupta0/raw/main/Sanskar-Gupta.pdf",
         permanent: true,
       },
       {

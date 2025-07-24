@@ -29,7 +29,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
             priority
             placeholder="blur"
             src={cover}
-            className="size-full rounded-md object-cover"
+            className="size-full rounded-md"
           />
         </div>
 
@@ -73,15 +73,3 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
   );
 };
 export default ProjectItem;
-
-{
-  /* <div className="flex gap-2 items-center">
-<div className="size-8 rounded-full grid place-content-center bg-neutral-900">
-  <SquareArrowOutUpRight className="size-3" />
-</div>
-
-<div className="size-8 rounded-full grid place-content-center bg-neutral-900">
-  <Github className="size-3" />
-</div>
-</div> */
-}
