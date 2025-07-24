@@ -20,27 +20,30 @@
     height: 50px;
     border: none;
     border-radius: 50%;
-    background-color: rgb(27, 27, 27);
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition-duration: 0.3s;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
   }
 
   .download-svg-icon {
-    fill: #00adb5;
+    fill: hsl(var(--primary));
+    transition: all 0.3s ease;
   }
 
   .download-icon2 {
     width: 18px;
     height: 5px;
-    border-bottom: 2px solid #00adb5;
-    border-left: 2px solid #00adb5;
-    border-right: 2px solid #00adb5;
+    border-bottom: 2px solid hsl(var(--primary));
+    border-left: 2px solid hsl(var(--primary));
+    border-right: 2px solid hsl(var(--primary));
+    transition: all 0.3s ease;
   }
 
   .download-tooltip {
@@ -48,56 +51,71 @@
     right: 100%;
     margin-right: 10px;
     opacity: 0;
-    background-color: rgb(12, 12, 12);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
+    background-color: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+    border: 1px solid hsl(var(--border));
+    padding: 8px 12px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition-duration: 0.2s;
+    transition: all 0.2s ease;
     pointer-events: none;
     letter-spacing: 0.5px;
     white-space: nowrap;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .download-tooltip::after {
     position: absolute;
     content: "";
-    width: 10px;
-    height: 10px;
-    background-color: rgb(12, 12, 12);
-    transform: rotate(45deg);
-    right: -5px;
+    width: 8px;
+    height: 8px;
+    background-color: hsl(var(--popover));
+    border-right: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+    transform: rotate(-45deg);
+    right: -4px;
     top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-    transition-duration: 0.3s;
+    margin-top: -4px;
+    transition: all 0.3s ease;
   }
 
   .download-resume-btn:hover .download-tooltip {
     opacity: 1;
-    transition-duration: 0.3s;
+    transition: all 0.3s ease;
   }
 
   .download-resume-btn:hover {
-    background-color: #00adb5;
-    transition-duration: 0.3s;
+    background-color: hsl(var(--accent));
+    border-color: hsl(var(--ring));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
   }
 
   .download-resume-btn:hover .download-icon2 {
-    border-bottom: 2px solid rgb(235, 235, 235);
-    border-left: 2px solid rgb(235, 235, 235);
-    border-right: 2px solid rgb(235, 235, 235);
+    border-bottom: 2px solid hsl(var(--ring));
+    border-left: 2px solid hsl(var(--ring));
+    border-right: 2px solid hsl(var(--ring));
   }
 
   .download-resume-btn:hover .download-svg-icon {
-    fill: rgb(255, 255, 255);
+    fill: hsl(var(--ring));
     animation: slide-in-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   .download-resume-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    transform: none;
+  }
+
+  .download-resume-btn:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   @keyframes slide-in-top {
@@ -121,8 +139,8 @@
     }
     
     .download-tooltip {
-      font-size: 12px;
-      padding: 4px 8px;
+      font-size: 11px;
+      padding: 6px 10px;
     }
   }
 
