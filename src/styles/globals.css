@@ -10,4 +10,128 @@
   ::selection {
     @apply bg-ring text-white;
   }
+
+  /* Download Resume Button Styles */
+  .download-resume-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+    z-index: 1000;
+  }
+
+  .download-svg-icon {
+    fill: #00adb5;
+  }
+
+  .download-icon2 {
+    width: 18px;
+    height: 5px;
+    border-bottom: 2px solid #00adb5;
+    border-left: 2px solid #00adb5;
+    border-right: 2px solid #00adb5;
+  }
+
+  .download-tooltip {
+    position: absolute;
+    right: 100%;
+    margin-right: 10px;
+    opacity: 0;
+    background-color: rgb(12, 12, 12);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.2s;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .download-tooltip::after {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: rgb(12, 12, 12);
+    transform: rotate(45deg);
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    transition-duration: 0.3s;
+  }
+
+  .download-resume-btn:hover .download-tooltip {
+    opacity: 1;
+    transition-duration: 0.3s;
+  }
+
+  .download-resume-btn:hover {
+    background-color: #00adb5;
+    transition-duration: 0.3s;
+  }
+
+  .download-resume-btn:hover .download-icon2 {
+    border-bottom: 2px solid rgb(235, 235, 235);
+    border-left: 2px solid rgb(235, 235, 235);
+    border-right: 2px solid rgb(235, 235, 235);
+  }
+
+  .download-resume-btn:hover .download-svg-icon {
+    fill: rgb(255, 255, 255);
+    animation: slide-in-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  .download-resume-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @keyframes slide-in-top {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  /* Responsive adjustments for the download button */
+  @media (max-width: 640px) {
+    .download-resume-btn {
+      bottom: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+    }
+    
+    .download-tooltip {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .download-resume-btn {
+      bottom: 12px;
+      right: 12px;
+      width: 42px;
+      height: 42px;
+    }
+  }
 }

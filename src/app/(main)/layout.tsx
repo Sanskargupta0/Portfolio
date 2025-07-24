@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Footer from "~/components/layout/footer";
 import Navbar from "~/components/layout/nav";
 import SkipContent from "~/components/ui/skip-content";
+import DownloadResumeBtn from "~/components/ui/download-resume-btn";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
@@ -12,6 +13,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         {children}
       </div>
       <Footer />
+      <DownloadResumeBtn />
     </div>
   );
 };
