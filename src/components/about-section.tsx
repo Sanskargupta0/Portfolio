@@ -13,33 +13,33 @@ const AboutSection = () => {
     <section className="grid gap-8 sm:gap-4 md:grid-cols-3" aria-label="About">
   <div className="order-2 space-y-3 sm:order-1 md:col-span-2">
     <h1 className="font-ubuntu text-lg font-semibold sm:text-xl">
-      Sanskar Gupta <span className="text-italic font-normal text-white">aka Ayush</span>
+      Sanskar Gupta <span className="text-italic font-normal text-[#00adb5]">aka Ayush</span>
     </h1>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      <span className="text-white">About Me <br /></span>
+      <span className="text-[#00adb5]">About Me <br /></span>
       Hey there! I'm a passionate developer from Lucknow, India. I love building digital solutions and experimenting with new ideas. 
       I’ve participated in 
-      <span className="text-white">
-        <a href="https://example.com/your-hackathon-record-link"> 3 hackathons </a>
+      <span className="text-[#00adb5]">
+      &nbsp;3 hackathons&nbsp; 
       </span> 
       where I sharpened my problem-solving skills and collaborated with amazing minds.
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      <span className="text-white">What I do? <br /></span>
-      I’ve successfully <span className="text-white"> delivered 10+ freelance </span> projects that solve real-world problems. 
-      I'm especially interested in building tools and software that make everyday life simpler, faster, and more efficient <span className="text-white"> #MakeItEasier </span>. 
+      <span className="text-[#00adb5]">What I do? <br /></span>
+      I’ve successfully <span className="text-[#00adb5]"> delivered 10+ freelance </span> projects that solve real-world problems. 
+      I'm especially interested in building tools and software that make everyday life simpler, faster, and more efficient <span className="text-[#00adb5]"> #MakeItEasier </span>. 
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
       I enjoy learning new technologies, exploring open source, and constantly improving my craft. 
-      <span className="text-white"> #BuildInPublic </span>
+      <span className="text-[#00adb5]"> #BuildInPublic </span>
       Whether it's automating workflows or designing better user experiences, I strive to build with purpose.
     </p>
 
     <p className={cn(typo({ variant: "paragraph", font: "sans" }), "sm:!mt-4")}>
-      I’m <span className="text-white">open to work</span>, freelance, or collaborate on exciting projects.{" "}
+      I’m <span className="text-[#00adb5]">open to work</span>, freelance, or collaborate on exciting projects.{" "}
       <a
         href={`mailto:${config.social.email}`}
         aria-label="Hire Me"
