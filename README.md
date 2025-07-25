@@ -1,88 +1,96 @@
-# [Studdy-Buddy](https://studdybuddyai.vercel.app/) &middot; [![Author Sanskar Gupta](https://img.shields.io/badge/Author-Sanskar-%3C%3E)](https://www.linkedin.com/in/sanskar-gupta-12476423b/)  
-[![GitHub](https://img.shields.io/badge/GitHub-%3C%3E)](https://github.com/Sanskargupta0/Studdy-Buddy)  
+# [Portfolio](https://sanskargupta.dev/) &middot; [![Author Sanskar Gupta](https://img.shields.io/badge/Author-Sanskar-%3C%3E)](https://www.linkedin.com/in/sanskar-gupta-12476423b/)  
+[![GitHub](https://img.shields.io/badge/GitHub-%3C%3E)](https://github.com/Sanskargupta0/Portfolio)  
 [![Next.js](https://img.shields.io/badge/Next.js-%3C%3E)](https://nextjs.org/)  
 [![React](https://img.shields.io/badge/React-%3C%3E)](https://react.dev/)  
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%3C%3E)](https://tailwindcss.com/)  
-[![Drizzle ORM](https://img.shields.io/badge/Drizzle%20ORM-%3C%3E)](https://orm.drizzle.team/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-%3C%3E)](https://www.typescriptlang.org/)
 
 ## 📝 Project Description
 
-Studdy-Buddy is an AI-powered study companion platform built with Next.js that revolutionizes the way students create and consume educational content. The application leverages Google's Gemini AI to automatically generate comprehensive study materials including notes, flashcards, quizzes, and Q&A sessions from any topic. With integrated YouTube recommendations, a marketplace for sharing study materials, and a credit-based premium system powered by Stripe, Studdy-Buddy provides a complete learning ecosystem for students and educators.
+A modern, responsive personal portfolio website built with Next.js 14 that showcases projects, skills, and blog posts. This portfolio features a dark theme design, internationalization support, GitHub contributions visualization, contact form integration, and a complete blog system with MDX support. The application includes view tracking, search functionality, and is optimized for SEO with dynamic metadata generation.
 
 ## ⚙️ Tech Stack
 
-- **Frontend**: Next.js 15, React 18, Tailwind CSS
-- **Backend**: Next.js API Routes, Drizzle ORM
-- **Database**: PostgreSQL (Neon)
-- **Authentication**: Clerk
-- **AI Integration**: Google Gemini AI
-- **Payment Processing**: Stripe
-- **Background Jobs**: Inngest
-- **External APIs**: YouTube Data API v3
-- **UI Components**: Radix UI, Lucide React
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS, Framer Motion, CSS Modules
+- **Content**: MDX, Velite (Content Processing)
+- **Database**: PostgreSQL (Prisma ORM)
+- **Authentication**: Not required (Public portfolio)
 - **Deployment**: Vercel
+- **Analytics**: Vercel Analytics & Speed Insights
+- **UI Components**: Radix UI, Lucide React
+- **Internationalization**: next-i18next (EN, ES support)
+- **External APIs**: 
+  - NoCode API (Google Sheets integration)
+  - Web3Forms (Contact form)
+  - GitHub Calendar API
 
 ## 🔋 Features
 
-👉 **AI-Powered Study Material Generation**: Automatically create comprehensive study materials using Google Gemini AI, including detailed notes, interactive flashcards, quizzes, and Q&A sessions from any topic or content you provide.
+👉 **Modern Portfolio Design**: Clean, dark-themed responsive design that works seamlessly across desktop, tablet, and mobile devices with smooth animations powered by Framer Motion.
 
-👉 **Smart Course Creation**: Input any topic and difficulty level to generate structured courses with chapters, topics, and organized learning paths.
+👉 **Project Showcase**: Interactive project gallery with detailed descriptions, technology stacks, live demo links, and GitHub repository links with cover images.
 
-👉 **Interactive Study Modes**: 
-- **Notes**: AI-generated comprehensive notes for each chapter
-- **Flashcards**: Interactive flip cards for quick review and memorization
-- **Quiz**: Multiple-choice questions with instant feedback
-- **Q&A**: Question-answer pairs for deeper understanding
+👉 **Skills Visualization**: Animated scrolling marquee displaying frontend and backend technologies with icons and color-coded categories.
 
-👉 **YouTube Integration**: Smart YouTube video recommendations based on course content using advanced embedding similarity matching for relevant educational videos.
+👉 **GitHub Integration**: Real-time GitHub contributions calendar with custom styling and contribution activity visualization.
 
-👉 **Marketplace System**: 
-- Share your study materials publicly with the community
-- Discover and learn from materials created by other users
-- Upvote and favorite system for quality content
-- Public course pages with SEO-friendly URLs
+👉 **Blog System**: 
+- Full-featured blog with MDX support
+- Multiple language support (English, Spanish)
+- Table of contents generation
+- Syntax highlighting for code blocks
+- SEO-optimized blog posts
+- Tag-based categorization
 
-👉 **Credit-Based System**: 
-- Free tier with 2 credits for new users
-- Premium subscription for unlimited access
-- Secure Stripe payment integration
+👉 **Contact Integration**: 
+- Contact form with Web3Forms integration
+- Google Sheets data collection via NoCode API
+- Form validation with React Hook Form
+- Social media links integration
 
-👉 **User Dashboard**: 
-- Track all your created courses
-- Monitor study progress
-- Manage favorites and created content
-- Credit usage analytics
+👉 **SEO Optimization**: 
+- Dynamic metadata generation
+- Open Graph tags
+- Twitter Card support
+- Structured data (JSON-LD)
+- Sitemap generation
+- Robot.txt configuration
 
-👉 **Background Processing**: Inngest-powered background jobs for AI content generation, ensuring responsive user experience while processing intensive AI requests.
+👉 **View Tracking**: Database-powered view tracking system for blog posts and portfolio analytics.
 
-👉 **Responsive Design**: Modern, dark/light theme-compatible UI that works seamlessly across desktop, tablet, and mobile devices.
+👉 **Search Functionality**: Built-in search for blog posts and content discovery.
 
-👉 **Authentication & Security**: Secure authentication with Clerk, including social login options and user management.
+👉 **Internationalization**: Multi-language support with easy language switching between English and Spanish.
+
+👉 **Performance Optimized**: 
+- Image optimization with Next.js Image component
+- Lazy loading for better performance
+- Optimized bundle size
+- Fast page transitions
 
 ## 🛠️ System Architecture
 
-### Core Workflows
+### Core Components
 
-1. **Course Creation Flow**:
-   - User inputs topic and difficulty level
-   - AI generates course outline with chapters and topics
-   - Background job processes detailed content generation
-   - Content is progressively made available as it's generated
+1. **Portfolio Structure**:
+   - About section with personal introduction
+   - Skills showcase with technology icons
+   - Project gallery with filtering capabilities
+   - Blog system with MDX content
+   - Contact form with external integrations
 
-2. **Study Material Processing**:
-   - Inngest background jobs handle AI content generation
-   - Multiple AI models for different content types (notes, quiz, Q&A)
-   - Parallel processing for optimal performance
+2. **Content Management**:
+   - MDX files for blog posts in multiple languages
+   - Velite for content processing and optimization
+   - Dynamic routing for blog posts and projects
+   - Automatic table of contents generation
 
-3. **YouTube Recommendations**:
-   - Course topics are converted to embeddings using Gemini
-   - YouTube search results are matched using cosine similarity
-   - Recommendations are cached for performance
-
-4. **Marketplace System**:
-   - Users can publish courses publicly
-   - SEO-friendly public URLs with course slugs
-   - Upvoting and favoriting system
+3. **Data Flow**:
+   - PostgreSQL database for view tracking
+   - Contact form data sent to Google Sheets
+   - GitHub API for contributions data
+   - Static generation for optimal performance
 
 ## 🚀 Quick Start
 
@@ -94,307 +102,372 @@ Make sure you have the following installed:
 
 - [Git](https://git-scm.com/)
 - [Node.js](https://nodejs.org/en) (version 18.x or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [pnpm](https://pnpm.io/) (recommended) or [npm](https://www.npmjs.com/)
 
 ### Cloning the Repository
 
 ```bash
-git clone https://github.com/Sanskargupta0/Studdy-Buddy.git
-cd Studdy-Buddy
+git clone https://github.com/Sanskargupta0/Portfolio.git
+cd Portfolio
 ```
 
 ### Installation
 
-Install dependencies using npm or use pnpm:
-
-```bash
-npm install
-```
-or
+Install dependencies using pnpm (recommended):
 
 ```bash
 pnpm install
 ```
 
+or using npm:
+
+```bash
+npm install
+```
 
 ### Environment Setup
 
-1. Create a `.env` file in the root directory by copying from `.env.example`:
+1. Create a `.env.local` file in the root directory:
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-2. Fill in all the required environment variables in your `.env` file. See the [Environment Variables](#environment-variables) section below for detailed instructions on obtaining each key.
+2. Fill in all the required environment variables in your `.env.local` file. See the [Environment Variables](#environment-variables) section below for detailed instructions.
 
 ### Database Setup
 
 1. **Set up PostgreSQL Database**:
-   - Create a free PostgreSQL database on [Neon](https://neon.tech/)
-   - Copy the connection string to your `.env` file
+   - Create a PostgreSQL database (recommended: [Neon](https://neon.tech/) or [Supabase](https://supabase.com/))
+   - Copy the connection strings to your `.env.local` file
 
 2. **Run Database Migrations**:
 
 ```bash
-npx drizzle-kit push
+npx prisma db push
 ```
 
-### Required External Services Setup
+3. **Generate Prisma Client**:
 
-#### 1. Authentication (Clerk)
-- Sign up at [Clerk](https://clerk.com/)
-- Create a new application
-- Copy the publishable key and secret key to your `.env` file
-- Set up webhooks for user management (optional but recommended)
-
-#### 2. AI Integration (Google Gemini)
-- Go to [Google AI Studio](https://aistudio.google.com/)
-- Create a new API key for Gemini
-- Add the API key to your `.env` file
-- Consider setting up multiple API keys for rate limiting
-
-#### 3. Payment Processing (Stripe)
-- Create account at [Stripe](https://stripe.com/)
-- Get your secret key from the dashboard
-- Create a product and price for monthly subscription
-- Copy the price ID to your `.env` file
-
-#### 4. YouTube Integration
-- Go to [Google Cloud Console](https://console.cloud.google.com/)
-- Enable YouTube Data API v3
-- Create credentials and get API key
-- Add to your `.env` file
-
-#### 5. Background Jobs (Inngest)
-- Sign up at [Inngest](https://inngest.com/)
-- Create a new app and get signing key
-- Add to your `.env` file
+```bash
+npx prisma generate
+```
 
 ### Running the Application
 
 1. **Start the development server**:
 
 ```bash
+pnpm dev
+```
+
+or
+
+```bash
 npm run dev
 ```
 
-2. **Start Inngest background job processor** (in a separate terminal):
-
-```bash
-npx inngest-cli@latest dev
-```
-
-**Important**: Both commands must be running simultaneously for the application to work properly. The Inngest CLI handles background job processing for AI content generation.
-
-3. Open your browser and navigate to `http://localhost:3000`
+2. Open your browser and navigate to `http://localhost:3000`
 
 ## 🔐 Environment Variables
 
-All required environment variables with descriptions:
-
-### Authentication (Clerk)
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key
-- `CLERK_SECRET_KEY`: Your Clerk secret key  
-- `CLERK_WEBHOOK_SECRET`: Webhook secret for Clerk events (optional)
+Create a `.env.local` file with the following variables:
 
 ### Database
-- `NEXT_PUBLIC_DATABASE_CONNECTION_STRING`: PostgreSQL connection string from Neon
-
-### AI Integration (Google Gemini)
-- `NEXT_PUBLIC_GEMINI_API_KEY`: Primary Gemini API key
-- `2ndNEXT_PUBLIC_GEMINI_API_KEY`: Secondary API key for rate limiting
-- `3rdNEXT_PUBLIC_GEMINI_API_KEY`: Tertiary API key for rate limiting
-
-### Payment Processing (Stripe)
-- `STRIPE_SECRET_KEY`: Your Stripe secret key
-- `NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY`: Price ID for monthly subscription
+```env
+POSTGRES_PRISMA_URL=your_postgresql_connection_string
+POSTGRES_URL_NON_POOLING=your_postgresql_non_pooling_connection_string
+```
 
 ### External APIs
-- `YOUTUBE_API_KEY`: YouTube Data API v3 key
+```env
+# NoCode API for Google Sheets integration
+NOCODE_API_KEY=your_nocode_api_key
+NOCODE_TAB_ID=your_google_sheet_tab_id
 
-### Background Jobs
-- `INNGEST_SIGNING_KEY`: Inngest signing key for background job processing
-
-### Application
-- `HOST_URL`: Your application URL (use `http://localhost:3000/` for development)
-
-## 🎯 Usage Guide
-
-### Creating Your First Course
-
-1. **Sign up/Login**: Use the authentication system powered by Clerk
-2. **Access Dashboard**: Navigate to your personal dashboard
-3. **Create Course**: Click "Create New Course"
-4. **Input Details**: 
-   - Enter your topic (be specific for better results)
-   - Select difficulty level (Easy, Medium, Hard)
-5. **Wait for Generation**: AI will create your course structure
-6. **Study**: Access notes, flashcards, quiz, and Q&A sections
-
-### Study Modes Explained
-
-- **📝 Notes**: Comprehensive, AI-generated study notes for each chapter
-- **🔄 Flashcards**: Interactive cards with front/back content for memorization
-- **❓ Quiz**: Multiple-choice questions with instant feedback
-- **💬 Q&A**: Question-answer pairs for deeper understanding
-
-### Marketplace Features
-
-- **Publish**: Make your courses available to the community
-- **Discover**: Browse courses created by other users
-- **Engage**: Upvote helpful content and save favorites
-- **Share**: Each public course gets a unique, SEO-friendly URL
-
-## 🏗️ Project Structure
-
+# Web3Forms for contact form (get from https://web3forms.com/)
+WEB3FORMS_ACCESS_KEY=your_web3forms_access_key
 ```
-studdy-buddy/
-├── app/                          # Next.js app directory
-│   ├── api/                      # API routes
-│   │   ├── courses/              # Course management
-│   │   ├── generate-course-outline/ # AI course generation
-│   │   ├── payment/              # Stripe integration
-│   │   ├── youtube-recommendations/ # YouTube API
-│   │   └── ...
-│   ├── dashboard/                # Authenticated user area
-│   │   ├── course/[courseId]/    # Individual course pages
-│   │   ├── create/               # Course creation
-│   │   ├── marketplace/          # Course discovery
-│   │   └── upgrade/              # Payment pages
-│   ├── public/[slug]/            # Public course pages
-│   └── _context/                 # React context
-├── components/                   # Reusable UI components
-│   └── ui/                       # Shadcn/ui components
-├── configs/                      # Configuration files
-│   ├── AiModel.js               # AI model configurations
-│   ├── db.js                    # Database connection
-│   └── schema.js                # Database schema
-├── inngest/                     # Background job functions
-├── lib/                         # Utility functions
-└── public/                      # Static assets
+
+### Application Settings
+```env
+NODE_ENV=development
 ```
+
+## 🎨 Customization Guide
+
+To make this portfolio your own, follow these steps:
+
+### 1. Personal Information (src/config.ts)
+
+Update the main configuration file with your details:
+
+```typescript
+export const config = {
+  appName: "Your Name",
+  appDesignation: "Your Title/Role",
+  appDescription: "Your description",
+  domainName: "yourdomain.com",
+  
+  social: {
+    github: "https://github.com/yourusername",
+    linkedin: "https://www.linkedin.com/in/yourusername/",
+    instagram: "https://www.instagram.com/yourusername/",
+    discord: "https://discordapp.com/users/yourusername",
+    email: "your.email@example.com",
+    phone: "your-phone-number",
+    youtube: "https://www.youtube.com/@yourusername",
+    twitter: "https://x.com/yourusername",
+    buymeacoffee: "https://buymeacoffee.com/yourusername",
+  }
+}
+```
+
+### 2. About Section (src/components/about-section.tsx)
+
+Replace the content with your personal story:
+- Update the name and alias
+- Replace the bio text with your background
+- Update hackathon/project counts
+- Change the profile image
+- Update any links to your achievements
+
+### 3. Projects (src/components/project/_project-mock.ts)
+
+Replace all project data with your own:
+- Project titles and descriptions
+- Technology stacks
+- GitHub repository URLs
+- Live demo URLs
+- Project cover images
+
+### 4. Skills (src/constants/stack.tsx)
+
+Customize the technologies displayed:
+- Add/remove technologies from `FRONTEND_STACKS` and `BACKEND_STACKS`
+- Update the tech stack icons and colors
+- Organize by your expertise level
+
+### 5. GitHub Username (src/components/github-contributions.tsx)
+
+```tsx
+<GitHubCalendar
+  username="your-github-username" // Update this
+  // ...
+/>
+```
+
+### 6. Blog Content (src/content/posts/)
+
+- Replace all existing blog posts with your content
+- Update author information in locale files
+- Add your own cover images
+- Update any personal references throughout
+
+### 7. SEO and Metadata (src/lib/seo.tsx)
+
+Update the schema and metadata:
+- Replace name and social handles
+- Update Twitter creator handle
+- Change domain references
+- Update the person schema data
+
+### 8. Redirects (next.config.mjs)
+
+Update all redirect destinations:
+- Resume link
+- Social media profiles
+- Support/donation links
+
+### 9. Images and Assets
+
+Replace the following images:
+- `src/assets/images/live-the-code.webp` → Your photo
+- `public/icon.png` → Your favicon
+- `public/apple-icon.png` → Apple touch icon
+- All project cover images
+- Blog post images
+
+### 10. Contact Form
+
+Update the Web3Forms access key in `src/components/contact-us.tsx`:
+
+```typescript
+access_key: "your_web3forms_access_key"
+```
+
+### 11. External Service Setup
+
+#### NoCode API (Google Sheets)
+1. Sign up at [NoCode API](https://nocodeapi.com/)
+2. Create a Google Sheets integration
+3. Get your API key and sheet tab ID
+4. Update the endpoint URL in `src/app/api/contact/route.ts`
+
+#### Web3Forms
+1. Sign up at [Web3Forms](https://web3forms.com/)
+2. Create a new form
+3. Get your access key
+4. Update in contact form component
+
+### 12. Locale Files
+
+Update author information in:
+- `src/locales/en/blog.json`
+- `src/locales/es/blog.json`
 
 ## 🔧 Development Commands
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
-
-# Start Inngest background jobs (separate terminal)
-npx inngest-cli@latest dev
+pnpm dev
 
 # Build for production
-npm run build
+pnpm build
 
 # Start production server
-npm start
+pnpm start
 
-# Lint code
-npm run lint
+# Content development (watch mode)
+pnpm dev:content
+
+# Build content
+pnpm build:content
+
+# Format code
+pnpm format
 
 # Database operations
-npx drizzle-kit push          # Push schema changes
-npx drizzle-kit studio        # Open database studio
+npx prisma studio          # Open database studio
+npx prisma db push         # Push schema changes
+npx prisma generate        # Generate Prisma client
 ```
 
-## 🔄 Background Jobs
+## 📁 Project Structure
 
-The application uses Inngest for reliable background job processing:
+```
+portfolio/
+├── src/
+│   ├── app/                      # Next.js app directory
+│   │   ├── (main)/              # Main layout group
+│   │   │   ├── blog/            # Blog pages
+│   │   │   ├── projects/        # Projects showcase
+│   │   │   └── tags/            # Tag pages
+│   │   ├── api/                 # API routes
+│   │   │   ├── contact/         # Contact form handler
+│   │   │   └── views/           # View tracking
+│   │   └── feed.xml/            # RSS feed generation
+│   ├── components/              # Reusable components
+│   │   ├── layout/              # Layout components
+│   │   ├── mdx/                 # MDX components
+│   │   ├── post/                # Blog post components
+│   │   ├── project/             # Project components
+│   │   └── ui/                  # UI components
+│   ├── content/                 # Blog content (MDX)
+│   │   └── posts/               # Blog posts by language
+│   ├── lib/                     # Utility functions
+│   ├── constants/               # Application constants
+│   ├── locales/                 # Internationalization
+│   ├── styles/                  # Global styles
+│   └── types/                   # TypeScript types
+├── public/                      # Static assets
+├── prisma/                      # Database schema
+└── velite.config.ts            # Content processing config
+```
 
-- **Course Generation**: AI content creation happens in background
-- **Content Processing**: Notes, flashcards, quizzes generated asynchronously  
-- **Error Handling**: Automatic retries and error recovery
-- **Status Updates**: Real-time status updates for users
+## 🎯 Content Management
 
-**Important**: Always run `npx inngest-cli@latest dev` in a separate terminal during development.
+### Adding Blog Posts
 
-## 🎨 UI/UX Features
+1. Create a new MDX file in `src/content/posts/[language]/`
+2. Follow the frontmatter structure:
 
-- **Modern Design**: Clean, minimalist interface with focus on readability
-- **Dark/Light Theme**: Automatic theme switching with user preference
-- **Responsive Layout**: Optimized for desktop, tablet, and mobile devices
-- **Loading States**: Skeleton loaders and progress indicators
-- **Error Handling**: User-friendly error messages and retry mechanisms
-- **Accessibility**: ARIA labels, keyboard navigation, and screen reader support
+```mdx
+---
+title: "Your Post Title"
+description: "Post description"
+tags: ["tag1", "tag2"]
+date: 2024-01-01
+published: true
+cover: "./images/cover/your-image.jpg"
+---
 
-## 📊 Credit System
+Your content here...
+```
 
-- **Free Tier**: 2 credits for new users
-- **Credit Usage**: 1 credit per course generation
-- **Premium Plan**: Unlimited credits with monthly subscription
-- **Credit Tracking**: Real-time credit balance in dashboard
+3. Run `pnpm dev:content` to process the content
 
-## 🔒 Security Features
+### Adding Projects
 
-- **Authentication**: Secure authentication with Clerk
-- **API Protection**: Route protection for authenticated endpoints
-- **Environment Variables**: Sensitive data stored securely
-- **CORS Configuration**: Proper cross-origin resource sharing setup
-- **Input Validation**: Server-side validation for all user inputs
-
-## 🚦 Troubleshooting
-
-### Common Issues
-
-1. **Inngest not working**: Ensure `npx inngest-cli@latest dev` is running
-2. **AI generation fails**: Check Gemini API key and quota limits
-3. **YouTube recommendations not loading**: Verify YouTube API key
-4. **Payment issues**: Confirm Stripe configuration
-5. **Database errors**: Check PostgreSQL connection string
-
-### Performance Tips
-
-- Use multiple Gemini API keys for better rate limiting
-- Monitor credit usage to avoid hitting API limits
-- Cache YouTube recommendations to reduce API calls
-- Optimize database queries for better performance
+1. Update `src/components/project/_project-mock.ts`
+2. Add project cover images to `src/assets/images/cover/`
+3. Include all required fields (title, description, stacks, etc.)
 
 ### 📸 Screenshots
 
 #### Home Page
 ![Home Page](/screenshots/home-page.png)
 
-#### Dashboard
-![Dashboard](/screenshots/dashboard.png)
+#### Project Page
+![Dashboard](/screenshots/project-page.png)
 
-#### Marketplace
-![Marketplace](/screenshots/marketplace.png)
+#### Blog Page
+![Marketplace](/screenshots/blog-page.png)
 
-#### Upgrade Page
-![Upgrade Page](/screenshots/upgrade-page.png)
+#### Light Mode
+![Upgrade Page](/screenshots/light-mode.png)
 
-#### Create Course Page
-![Course Page](/screenshots/create-course-page.png)
 
-#### Course Page
-![Course Page](/screenshots/course-page.png)
+## 🚦 Troubleshooting
 
-#### Notes View
-![Notes View](/screenshots/notes.png)
+### Common Issues
 
-#### Flashcards View
-![Flashcards View](/screenshots/flashcards.png)
+1. **Content not updating**: Run `pnpm build:content` to rebuild
+2. **Database connection errors**: Check PostgreSQL connection strings
+3. **Contact form not working**: Verify Web3Forms and NoCode API keys
+4. **Images not loading**: Ensure images are in the correct directory
+5. **GitHub contributions not showing**: Check username in component
 
-#### Q&A View
-![Q&A View](/screenshots/qa.png)
+### Performance Tips
 
-#### Quiz View
-![Quiz View](/screenshots/quiz.png)
+- Optimize images before adding them
+- Use WebP format for better compression
+- Keep blog post sizes reasonable
+- Monitor bundle size with build analysis
 
-#### Public Course Page
-![Public Course Page](/screenshots/public-course.png)
+## 🔒 Security Considerations
 
-## 📞 Support
+- Environment variables are properly configured
+- API routes include input validation
+- External form submissions are handled securely
+- No sensitive data exposed in client-side code
 
-If you encounter any issues or have questions:
+## 📊 Analytics
 
-1. Check the troubleshooting section above
-2. Review your environment variables configuration
-3. Ensure all external services are properly set up
-4. Check console logs for detailed error messages
+The portfolio includes:
+- Vercel Analytics for performance monitoring
+- View tracking for blog posts
+- Speed Insights for Core Web Vitals
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically on every push
+
+### Deploy to Other Platforms
+
+The application can be deployed to any platform supporting Next.js:
+- Netlify
+- Railway
+- DigitalOcean
+- AWS Amplify
 
 ## 🤝 Contributing
 
