@@ -2,12 +2,26 @@ import { env } from "~/constants/env";
 import { ContactSchema, contactSchemaType } from "~/schema";
 
 async function sendDataToGoogleSheets(data: contactSchemaType): Promise<void> {
+  // Format date as DD-MM-YYYY h:mma
+  const now = new Date();
+  const pad = (n: number) => n < 10 ? `0${n}` : n;
+  let hours = now.getHours();
+  const minutes = pad(now.getMinutes());
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  const formattedDate = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${hours}:${minutes}${ampm}`;
+
+  const row = [
+    formattedDate,
+    ...Object.values(data)
+  ];
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify([Object.values(data)]),
+    body: JSON.stringify([row]),
   };
 
   const response = await fetch(
