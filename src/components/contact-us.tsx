@@ -28,24 +28,44 @@ const ContactUs = () => {
   async function onSubmit(data: contactSchemaType) {
     try {
       setIsSubmitting(true);
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: "1e5bf407-153b-4427-9e16-ddb33c8de7bd",
-          ...data,
+      // Send to both /api/contact and web3forms in parallel
+      const [sheetRes, web3Res] = await Promise.all([
+        fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(data),
         }),
-      });
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: "1e5bf407-153b-4427-9e16-ddb33c8de7bd",
+            ...data,
+          }),
+        })
+      ]);
 
-      const result = await response.json();
-      if (result.success) {
+      const web3Result = await web3Res.json();
+
+      if (sheetRes.ok && web3Result.success) {
         toast.success("Thank you for contacting me!");
         form.reset();
       } else {
-        toast.error("Something went wrong. Please try again.");
+        let errorMsg = "";
+        if (!sheetRes.ok) {
+          const errorData = await sheetRes.json();
+          errorMsg += errorData?.error || "Failed to save to sheet. ";
+        }
+        if (!web3Result.success) {
+          errorMsg += web3Result.message || "Failed to send email.";
+        }
+        toast.error(errorMsg || "Something went wrong. Please try again.");
       }
     } catch (error) {
       toast.error("Failed to send message. Please try again.");
