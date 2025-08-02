@@ -1,40 +1,5 @@
-import { env } from "~/constants/env";
 import { ContactSchema, contactSchemaType } from "~/schema";
-
-async function sendDataToGoogleSheets(data: contactSchemaType): Promise<void> {
-  // Format date as DD-MM-YYYY h:mma
-  const now = new Date();
-  const pad = (n: number) => n < 10 ? `0${n}` : n;
-  let hours = now.getHours();
-  const minutes = pad(now.getMinutes());
-  const ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  const formattedDate = `${pad(now.getDate())}-${pad(now.getMonth() + 1)}-${now.getFullYear()} ${hours}:${minutes}${ampm}`;
-
-  const row = [
-    formattedDate,
-    ...Object.values(data)
-  ];
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify([row]),
-  };
-
-  const response = await fetch(
-    `https://v1.nocodeapi.com/sanskargupta0/google_sheets/${env.NOCODE_API_KEY}?tabId=${env.NOCODE_TAB_ID}`,
-    requestOptions
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to send data to Google Sheets");
-  }
-
-  return await response.json();
-}
+import { appendToGoogleSheets } from "~/lib/google-sheets";
 
 async function handlePostRequest(request: Request): Promise<Response> {
   try {
@@ -50,9 +15,9 @@ async function handlePostRequest(request: Request): Promise<Response> {
       });
     }
 
-    const result = await sendDataToGoogleSheets(data);
+    await appendToGoogleSheets(data);
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify({ success: true, message: "Data saved successfully" }), {
       headers: {
         "Content-Type": "application/json",
       },

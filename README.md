@@ -179,20 +179,30 @@ POSTGRES_PRISMA_URL=your_postgresql_connection_string
 POSTGRES_URL_NON_POOLING=your_postgresql_non_pooling_connection_string
 ```
 
-### External APIs
+### Google Sheets API
 ```env
-# NoCode API for Google Sheets integration
-NOCODE_API_KEY=your_nocode_api_key
-NOCODE_TAB_ID=your_google_sheet_tab_id
-
-# Web3Forms for contact form (get from https://web3forms.com/)
-WEB3FORMS_ACCESS_KEY=your_web3forms_access_key
+# Google Sheets API for contact form integration
+GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour_Private_Key_Here\n-----END PRIVATE KEY-----\n"
+GOOGLE_SHEETS_CLIENT_EMAIL=your_service_account@project.iam.gserviceaccount.com
+GOOGLE_SHEETS_SPREADSHEET_ID=your_google_spreadsheet_id
 ```
 
 ### Application Settings
 ```env
 NODE_ENV=development
 ```
+
+### Google Sheets Setup
+
+For detailed instructions on setting up Google Sheets API integration, see the [Google Sheets Setup Guide](./GOOGLE_SHEETS_SETUP.md).
+
+Quick setup steps:
+1. Create a Google Cloud Project
+2. Enable Google Sheets API
+3. Create a Service Account and download the JSON key
+4. Create a Google Spreadsheet and share it with the service account
+5. Extract credentials and add them to your `.env.local`
+6. Run `pnpm setup:sheets` to initialize the spreadsheet headers
 
 ## 🎨 Customization Guide
 
