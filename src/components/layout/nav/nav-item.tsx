@@ -1,10 +1,10 @@
 "use client";
-import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { NavType } from "./_nav-mock";
 import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
 import { motion } from "framer-motion";
+import { NavigationLink } from "~/components/ui/navigation-link";
 
 const NavItem: React.FC<NavType[0] & { setOpen?: Dispatch<SetStateAction<boolean>> }> = ({
   label,
@@ -30,14 +30,15 @@ const NavItem: React.FC<NavType[0] & { setOpen?: Dispatch<SetStateAction<boolean
       )}
       onClick={onClickHandler}
     >
-      <Link
+      <NavigationLink
         href={path}
-        role="link"
-        aria-label={label}
         className="el-focus-styles relative z-10 rounded-sm"
+        aria-label={label}
+        animated={false}
+        showLoader={true}
       >
         {label}
-      </Link>
+      </NavigationLink>
 
       {pathname === path && (
         <motion.span

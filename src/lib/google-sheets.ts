@@ -47,7 +47,7 @@ export const appendToGoogleSheets = async (data: ContactFormData): Promise<void>
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: env.GOOGLE_SHEETS_SPREADSHEET_ID,
-      range: 'Sheet1!A:E', // Adjust range as needed
+      range: 'Contact!A:E', // Adjust range as needed
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values,

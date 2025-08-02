@@ -1,8 +1,8 @@
 import React, { AnchorHTMLAttributes, ReactNode } from "react";
-import Link from "next/link";
 import { ClassValue } from "clsx";
 import { cn } from "~/lib/utils";
 import { buttonVariants } from "../ui/button";
+import { NavigationLink } from "../ui/navigation-link";
 
 const CustomLink = (
   props: {
@@ -11,29 +11,40 @@ const CustomLink = (
     className?: ClassValue;
   } & AnchorHTMLAttributes<HTMLAnchorElement>
 ) => {
-  const href = props.href;
+  const { href, children, className, ...restProps } = props;
   const isInternalLink = href && href.startsWith("/");
 
   const linkVariant = buttonVariants({
     variant: "link",
     className: cn(
       "!p-0 h-full !inline-block !whitespace-normal !text-base !text-ring",
-      props.className
+      className
     ),
   });
 
   if (isInternalLink) {
     return (
-      <Link className={linkVariant} {...props}>
-        {props.children}
-      </Link>
+      <NavigationLink 
+        href={href}
+        className={linkVariant} 
+        showLoader={true}
+        animated={false}
+        {...restProps}
+      >
+        {children}
+      </NavigationLink>
     );
   }
 
   return (
-    <a target="_blank" rel="external" className={linkVariant} {...props}>
-      {props.children}
-    </a>
+    <NavigationLink
+      href={href}
+      external
+      className={linkVariant}
+      {...restProps}
+    >
+      {children}
+    </NavigationLink>
   );
 };
 

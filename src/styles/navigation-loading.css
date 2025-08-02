@@ -1,0 +1,186 @@
+/* Navigation Loading Animations */
+
+/* Pulse animation for loading elements */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 173, 181, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 173, 181, 0);
+  }
+}
+
+/* Shimmer effect for loading placeholders */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+/* Loading spinner variants */
+.loading-spinner-primary {
+  border: 2px solid rgb(var(--muted));
+  border-top: 2px solid #00adb5;
+  border-right: 2px solid #00adb5;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner-secondary {
+  border: 2px solid rgb(var(--muted) / 0.3);
+  border-left: 2px solid #00adb5;
+  border-bottom: 2px solid #00adb5;
+  animation: spin 1.5s linear infinite reverse;
+}
+
+/* Pulse ring animation */
+.pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 173, 181, 0.1),
+    transparent
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Loading dots animation */
+.loading-dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.loading-dots > div {
+  width: 4px;
+  height: 4px;
+  background-color: #00adb5;
+  border-radius: 50%;
+  animation: loading-dots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots > div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots > div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loading-dots {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Progress bar animation */
+.progress-bar {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #00adb5,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: progress-bar 2s infinite;
+}
+
+@keyframes progress-bar {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Fade in animation for page content */
+.fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--muted)) 25%,
+    rgb(var(--muted) / 0.5) 50%,
+    rgb(var(--muted)) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Loading overlay */
+.loading-overlay {
+  background: rgba(var(--background), 0.8);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Responsive loading states */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner-primary,
+  .loading-spinner-secondary,
+  .pulse-ring,
+  .shimmer,
+  .loading-dots > div,
+  .progress-bar,
+  .skeleton {
+    animation: none;
+  }
+}
+
+/* Dark mode adjustments */
+.dark .shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 173, 181, 0.2),
+    transparent
+  );
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--muted)) 25%,
+    rgb(var(--muted) / 0.3) 50%,
+    rgb(var(--muted)) 75%
+  );
+}

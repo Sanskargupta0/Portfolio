@@ -6,6 +6,7 @@ import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomLink } from "~/components/mdx";
 import { PostList } from "~/components/post";
+import { PageTransition } from "~/components/ui/page-transition";
 import { getPostsByTagSlug } from "~/lib/utils";
 
 interface TagDetailPageProps {
@@ -30,16 +31,18 @@ const TagDetailPage: React.FC<TagDetailPageProps> = ({ params }) => {
   }, [posts, i18n.language, tag]);
 
   return (
-    <div className="!mt-8">
-      <h2 className="rounded-md bg-neutral-800/50 p-2 text-center text-xl">Tagged [ {title} ]</h2>
+    <PageTransition>
+      <div className="!mt-8">
+        <h2 className="rounded-md bg-neutral-800/50 p-2 text-center text-xl">Tagged [ {title} ]</h2>
 
-      <PostList posts={displayPosts} showRss={false} />
+        <PostList posts={displayPosts} showRss={false} />
 
-      <h3 className="mt-4 text-muted-foreground" id="main-nav">
-        Alternatively, <CustomLink href="/tags">choose from all tags</CustomLink> or{" "}
-        <CustomLink href="/blog">view all posts</CustomLink>
-      </h3>
-    </div>
+        <h3 className="mt-4 text-muted-foreground" id="main-nav">
+          Alternatively, <CustomLink href="/tags">choose from all tags</CustomLink> or{" "}
+          <CustomLink href="/blog">view all posts</CustomLink>
+        </h3>
+      </div>
+    </PageTransition>
   );
 };
 
