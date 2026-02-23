@@ -75,7 +75,7 @@ const ContactUs = () => {
   }
 
   return (
-    <section aria-label="contact" className="!mt-5">
+    <section id="contact" aria-label="contact" className="!mt-5">
       <div className="flex w-full flex-col items-center gap-4 md:flex-row">
         <div className="size-full space-y-4 md:max-w-xs">
           <h2 className={typo({ variant: "h2" })}>Get in Touch</h2>

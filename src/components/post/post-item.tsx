@@ -48,9 +48,9 @@ const PostItem: React.FC<PostItemProps> = ({
               <p className="mb-2 mt-1 line-clamp-2 font-ubuntu text-sm text-muted-foreground">
                 {description}
               </p>
-              <Tags tags={tags} />
             </div>
           </Link>
+          <Tags tags={tags} />
         </Card>
       </li>
     );

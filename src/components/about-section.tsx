@@ -1,6 +1,5 @@
 "use client";
 
-import config from "~/config";
 import { cn } from "~/lib/utils";
 import { typo } from "./ui/typograpghy";
 import Image from "next/image";
@@ -17,35 +16,30 @@ const AboutSection = () => {
     </h1>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      <span className="text-[#00adb5]">About Me <br /></span>
-      Hey there! I'm a passionate developer from Lucknow, India. I love building digital solutions and experimenting with new ideas. 
-      I’ve participated in 
-      <span className="text-[#00adb5]">
-      &nbsp;3 hackathons&nbsp; 
-      </span> 
-      where I sharpened my problem-solving skills and collaborated with amazing minds.
+      <span>Product-focused Software Developer</span> who ships fast and builds for impact. I turn ideas into <span className="text-[#00adb5]">scalable, production-ready systems</span> and obsess over the details that make software reliable, efficient, and secure.
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      <span className="text-[#00adb5]">What I do? <br /></span>
-      I’ve successfully <span className="text-[#00adb5]"> delivered 10+ freelance </span> projects that solve real-world problems. 
-      I'm especially interested in building tools and software that make everyday life simpler, faster, and more efficient <span className="text-[#00adb5]"> #MakeItEasier </span>. 
+      Currently building internal automation systems at <span className="text-[#00adb5]">Electronicx GmbH</span>, where I automated <span className="text-[#00adb5]">€520K+</span> worth of returns, saved <span className="text-[#00adb5]">2,000+ staff hours</span>, and built real-time microservices across <span className="text-[#00adb5]">Node.js, FastAPI, Docker</span>, and <span className="text-[#00adb5]">CI/CD pipelines</span>.
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      I enjoy learning new technologies, exploring open source, and constantly improving my craft. 
-      <span className="text-[#00adb5]"> #BuildInPublic </span>
-      Whether it's automating workflows or designing better user experiences, I strive to build with purpose.
+      Previously, I built <span className="text-[#00adb5]">Studdy-Buddy</span>, an AI-powered learning platform using <span className="text-[#00adb5]">Gemini AI + RAG workflows</span>, and a secure online exam system with <span className="text-[#00adb5]">live anti-cheating detection</span> at <span className="text-[#00adb5]">AptiDude</span>.
+    </p>
+
+    <p className={typo({ variant: "paragraph", font: "sans" })}>
+      <span className="text-[#00adb5]">3+ years</span> building. <span className="text-[#00adb5]">30+ freelance products</span> shipped. I don’t chase trends — I build systems that work. 
+      <span className="text-[#00adb5]"> 0 → 1 → 100.</span> Head down, code up, goal clear.
     </p>
 
     <p className={cn(typo({ variant: "paragraph", font: "sans" }), "sm:!mt-4")}>
-      I’m <span className="text-[#00adb5]">open to work</span>, freelance, or collaborate on exciting projects.{" "}
+      <span className="text-[#00adb5]">Open to Work:</span> Full-Time, Freelance, or Collabs.{" "}
       <a
-        href={`mailto:${config.social.email}`}
+        href="#contact"
         aria-label="Hire Me"
         className="el-focus-styles text-ring"
       >
-        Contact Me.
+        Let's talk.
       </a>
     </p>
   </div>
