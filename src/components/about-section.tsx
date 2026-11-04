@@ -20,15 +20,15 @@ const AboutSection = () => {
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      Currently building internal automation systems at <span className="text-[#00adb5]">Electronicx GmbH</span>, where I automated <span className="text-[#00adb5]">€520K+</span> worth of returns, saved <span className="text-[#00adb5]">2,000+ staff hours</span>, and built real-time microservices across <span className="text-[#00adb5]">Node.js, FastAPI, Docker</span>, and <span className="text-[#00adb5]">CI/CD pipelines</span>.
+      Building <span className="text-[#00adb5]">PioWorker at Piovation GmbH</span>, spanning UI/UX, backend connectors, and code execution; automated QA with <span className="text-[#00adb5]">Playwright, Jenkins, and Grafana</span>, cutting manual testing by <span className="text-[#00adb5]">~90%</span>.
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      Previously, I built <span className="text-[#00adb5]">Studdy-Buddy</span>, an AI-powered learning platform using <span className="text-[#00adb5]">Gemini AI + RAG workflows</span>, and a secure online exam system with <span className="text-[#00adb5]">live anti-cheating detection</span> at <span className="text-[#00adb5]">AptiDude</span>.
+      Built <span className="text-[#00adb5]">Electronicx GmbH's</span> return automation handling <span className="text-[#00adb5]">€520K+ across 5,000+ returns</span>, saving <span className="text-[#00adb5]">2,000+ staff hours</span>. Previously developed <span className="text-[#00adb5]">Studdy-Buddy</span> using <span className="text-[#00adb5]">Gemini AI and RAG</span>, and <span className="text-[#00adb5]">AptiDude's MERN examination platform</span> with real-time anti-cheating detection.
     </p>
 
     <p className={typo({ variant: "paragraph", font: "sans" })}>
-      <span className="text-[#00adb5]">3+ years</span> building. <span className="text-[#00adb5]">30+ freelance products</span> shipped. I don’t chase trends — I build systems that work. 
+      <span className="text-[#00adb5]">3+ years</span> building. <span className="text-[#00adb5]">30+ freelance products</span> shipped. I don't chase trends - I build systems that work.
       <span className="text-[#00adb5]"> 0 → 1 → 100.</span> Head down, code up, goal clear.
     </p>
 
