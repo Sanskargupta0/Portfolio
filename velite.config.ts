@@ -12,7 +12,7 @@ const computedFields = <T extends { slug: string }>(data: T) => ({
 
 const posts = defineCollection({
   name: "Post",
-  pattern: "posts/**/*.mdx",
+  pattern: "posts/en/**/*.mdx",
   schema: s
     .object({
       title: s.string().max(99),
@@ -20,7 +20,12 @@ const posts = defineCollection({
       description: s.string().max(999),
       cover: s.image(),
       date: s.isodate(),
+      updatedAt: s.isodate().optional(),
       published: s.boolean().default(true),
+      author: s.string().nullable().default("Sanskar Gupta"),
+      dateType: s.enum(["published", "editorial"]).default("published"),
+      importedAt: s.isodate().optional(),
+      originalPublishedAt: s.isodate().optional(),
       body: s.mdx(),
       toc: s.toc(),
       tags: s.array(s.string()),
@@ -50,7 +55,6 @@ export default defineConfig({
           behavior: "wrap",
           properties: {
             className: ["subheading-anchor"],
-            ariaLabel: "Link to section",
           },
         },
       ],

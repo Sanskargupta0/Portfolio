@@ -1,0 +1,404 @@
+---
+title: "AI Can't Save Bad Engineering"
+description: "Why AI coding tools cannot replace engineering fundamentals: architecture, debugging, security, maintenance, and the judgment behind reliable software."
+tags: ["artificial-intelligence","software-engineering","software-architecture","code-quality","ai-coding-tools"]
+date: "2026-06-08"
+updatedAt: "2026-11-06"
+dateType: "editorial"
+published: true
+author: null
+importedAt: "2026-11-05"
+cover: "./images/cover/articles/ai-cant-save-bad-engineering.png"
+originalPublishedAt: "2026-05-25"
+---
+
+## The Shallow Engineer Problem
+
+Let's talk about these shallow engineers today.
+
+There are many engineers who are nothing without AI. So let us dive into this.
+
+First, I have noticed a common pattern among many open-source contributors during GSOC.
+
+They can ship features.
+
+They can write thousands of lines of code.
+
+But they do not know what it actually does.
+
+That is one of the major problems I see with these people.
+
+**They ship a lot but understand very little about what and how things are going on.**
+
+## Understanding Before Code
+
+When I approach a feature, my first instinct is not code.
+
+My first instinct is understanding who will use it.
+
+-   What are the edge cases
+-   How should I optimize it for future extensibility
+-   Do we even need this feature
+-   Do we have existing solutions that could be adapted
+
+Many open-source contributors I have seen just jump straight into implementation.
+
+They do not even check if the codebase already contains 80% of what they need.
+
+Yet their pull requests end up with **1500 to 3000 lines of code** for a single feature.
+
+_An engineer who truly understands the problem would probably need only 200 lines._
+
+## The Vibe Coder
+
+Another problem I see is their inability to make trade-off decisions.
+
+There is a person I know.
+
+He is not an engineer.
+
+**Purely viber coder.**
+
+When I told him he should understand trade-offs before starting any project, he went to ChatGPT and asked what is best for creating an app.
+
+It said Flutter.
+
+So he started building in Flutter.
+
+When he wanted to create a to-do list app, he asked ChatGPT which framework to use for web.
+
+It said Next.js.
+
+So he started with Next.js.
+
+When I saw him building, I knew this app would be heavily client-side.
+
+It would have been better to use Vite plus React or a Tan stack instead.
+
+Next.js is great but when you force it to be client-side instead of server-side, you deal with hydration errors and unnecessary complexity.
+
+To-do list apps are mostly client-side.
+
+They require minimal server interaction and would be much faster with simpler architectures.
+
+He did not listen.
+
+He started promptinh anyway.
+
+By the way, that person has a **$200 Claude subscription**.
+
+He is almost at peak usage as an engineer.
+
+But that is not what we are discussing.
+
+### Two Weeks of Wasted Effort
+
+What I noticed was he spent two weeks building something that already existed.
+
+He was literally copying _Superlist_, an open-source app, and _TickTick_.
+
+He liked certain features from Superlist.
+
+Certain features from TickTick.
+
+He wanted to build something combining the UI of Superlist, the UX of TickTick, plus the habit tracking system from TickTick.
+
+He had too much on his plate.
+
+He wanted calendar scheduling too.
+
+He purchased TickTick premium just to understand the features better.
+
+He spent an entire two weeks hitting usage limits, **prompting like a zombie**.
+
+The final outcome was terrible.
+
+### The Code That Broke
+
+The code was among the lowest quality I have seen.
+
+When he showed me, I pointed out many mistakes.
+
+**Whenever you are coding, you should be thinking about architecture first.**
+
+As a non-engineer, he did not listen.
+
+Instead, he asked Claude to fix the architecture.
+
+_That is something you start with._
+
+**It is the foundation of your home.**
+
+_You cannot architect after building the structure._
+
+He kept adding features until he reached a point where Claude could not help anymore.
+
+The codebase was beyond his limit.
+
+It was running on hope and prayers.
+
+The code finally broke.
+
+It was so broken that actions in the calendar did not reflect in todo.
+
+Marking a task in the to-do list did not reflect in the calendar.
+
+Connecting Google Calendar would not update properly.
+
+When it did update, all other events disappeared.
+
+He finally called me and said _this is really messed up, I cannot do anything_.
+
+## The Complexity He Missed
+
+I told he should not be building something that already exists.
+
+**He do not understand the amount of complexity these products cover.**
+
+There are things he cannot even think of.
+
+A task having a subtask.
+
+That subtask having its own subtask.
+
+Sub nested structures.
+
+In TickTick, there are multiple types of tasks.
+
+-   Task
+-   Checklist task
+-   Nested sub-issues
+-   Nested sub-tasks
+
+On top of that, you can track Pomodoro.
+
+You can track stopwatch.
+
+Multiple counting methods for a task.
+
+Then there are integrations.
+
+-   Alexa
+-   ChatGPT
+-   Web app
+-   Desktop app
+-   Mobile app
+-   Notification system
+
+**Countless edge cases to cover for every single feature.**
+
+He shipped many things but nothing turned out meaningful.
+
+## What They Lack
+
+Because he did not know how to architect.
+
+How to build from the ground up.
+
+**This is what happens when you reach the peak of AI dependency and realize you have wasted a great deal of time.**
+
+These people are stuck because they cannot decide trade-offs properly.
+
+They do not know how to scale products.
+
+They do not know what maintainability means.
+
+_Security is not even in their vocabulary._
+
+Cost optimization?
+
+I think we can already see the evidence.
+
+He spent **$200** on a Claude subscription.
+
+Instead, he could have purchased TickTick or Superlist premium for around **$10 to $20 for a year**.
+
+## Decision Bugs
+
+Then comes architectural decisions.
+
+These people do not even use their brain.
+
+**Most bugs today are not syntax bugs.**
+
+**They are decision bugs.**
+
+Code is not the commodity anymore.
+
+_Code that compiles means nothing._
+
+**Decision bugs are the bigger challenge.**
+
+These Vibe coders do not even know the code they are shipping.
+
+What it does.
+
+What it means.
+
+They do not know how debugging works.
+
+They do not know what is breaking when something breaks.
+
+I am not bashing on them.
+
+_I am saying if it is not your field, you should not be trying it._
+
+If they were using AI in the medical field, most patients would probably be dead by now.
+
+### Symptoms of AI Dependency
+
+A few more symptoms I have seen with these people.
+
+They are unable to debug without AI.
+
+They do not know what dependency hell means.
+
+They just trust whatever AI writes.
+
+They do not know what patches mean.
+
+There are many fundamental things they do not understand.
+
+**They just copy blindly and end up with half-baked projects that are not good enough for daily use or maintenance.**
+
+## Fundamentals That Matter
+
+Now let me talk about some fundamentals that are super important in the AI era.
+
+1.  **networking** You should learn how networking works.
+    
+2.  **databases** You should know how databases work. Their limitations. How they handle load. How to optimize queries.
+    
+3.  **memory management** It may sound basic but you have to think in terms of resources.
+    
+
+Memory is not infinite.
+
+You should optimize your codebase for the end user.
+
+4.  **Asynchronous systems**
+
+Caching.
+
+Operating system.
+
+Browser internals if you are building for the web.
+
+### AI Amplifies What You Have
+
+AI made implementation cheaper.
+
+_But understanding is expensive._
+
+**Good engineers with AI become 10x.**
+
+**Weak engineers produce 10x more garbage.**
+
+_AI amplifies whatever you have._
+
+## Deploying Naked
+
+Then comes the final problem.
+
+Whenever these people somehow manage to build a successful product, they deploy without any monitoring.
+
+Without logging.
+
+No rate limiting.
+
+No security rules.
+
+Exposed APIs.
+
+No backup.
+
+No observability.
+
+**They just deploy it on the internet.**
+
+_It is like someone walking naked into a hostile environment where anyone can cause damage._
+
+Earlier we had Tutorial hells or script kiddies in the hacking world.
+
+They used to copy-paste things without building anything meaningful.
+
+Now we have a replacement.
+
+**The AI/Viber coder.**
+
+**And they are much more dangerous.**
+
+Because they do not know what they are doing.
+
+They trust AI so much they do not even question it.
+
+Whatever AI does, they do it.
+
+They do not know how vulnerable they are.
+
+A single slip-up and their whole security is gone.
+
+Their whole operating system is exposed.
+
+_Their code is literally open to the wild._
+
+## What Survives
+
+**The only fundamentals that survive in software engineering from the 1990s till now are the core concepts.**
+
+Frameworks die.
+
+Tools die.
+
+Models change.
+
+**But the core concepts always remain.**
+
+TCP is still there.
+
+Databases are still there.
+
+Distributed systems work the same way.
+
+Algorithms are still relevant.
+
+Architecture thinking survives.
+
+Systems built on solid architecture still thrive.
+
+This is what will stay relevant.
+
+Frameworks, tools, models will come and go.
+
+_You should not depend on them._
+
+## Maintenance Is the Real Challenge
+
+**AI reduces effort but not complexity.**
+
+Building apps becomes much easier.
+
+_Maintaining them is not easier at all._
+
+When it comes to maintaining, you need to think about:
+
+-   current scale
+-   how to deploy
+-   how to scale
+-   database migration strategies in case of failures
+-   concurrency edge cases
+
+The new engineering will revolve around understanding of business, systems, users, dependencies, and architectural decisions instead of giving AI full control of your thinking.
+
+**A 10x engineer uses AI for features, not for architecture.**
+
+In the industry, it used to be can you code.
+
+Now it is shifting toward:
+
+-   can you code with AI
+-   and can you also build reliable systems
+
+That is where we are with the current state of AI and the AI coder phenomenon.
+
+I hope you learned some new things from this.

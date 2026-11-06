@@ -32,12 +32,13 @@ export async function generateMetadata({ params }: BlogPostParams) {
   return getSEOTags({
     title: post.title,
     description: post.description,
-    canonicalUrlRelative: `/blog/${post.slugAsParams.split("/")}`,
+    keywords: post.tags.map((tag) => tag.replaceAll("-", " ")),
+    canonicalUrlRelative: `/blog/${post.slugAsParams}`,
     extraTags: {
       openGraph: {
         title: post.title,
         description: post.description,
-        url: `/blog/${post.slug.split("/")}`,
+        url: `/blog/${post.slugAsParams}`,
         images: [
           {
             url: post.cover.src,
@@ -46,7 +47,16 @@ export async function generateMetadata({ params }: BlogPostParams) {
           },
         ],
         locale: "en_US",
-        type: "website",
+        type: "article",
+        publishedTime: post.originalPublishedAt ?? post.date,
+        modifiedTime: post.updatedAt ?? post.importedAt ?? post.date,
+        tags: post.tags,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: post.title,
+        description: post.description,
+        images: [post.cover.src],
       },
     },
   });

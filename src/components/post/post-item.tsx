@@ -14,6 +14,7 @@ interface PostItemProps extends Post {
 
 const PostItem: React.FC<PostItemProps> = ({
   date,
+  dateType,
   title,
   description,
   metadata,
@@ -44,7 +45,7 @@ const PostItem: React.FC<PostItemProps> = ({
               </div>
             </div>
             <div className="min-w-0 flex-1">
-              <PostMetadata title={title} metadata={metadata} date={date} />
+              <PostMetadata title={title} metadata={metadata} date={date} dateType={dateType} />
               <p className="mb-2 mt-1 line-clamp-2 font-ubuntu text-sm text-muted-foreground">
                 {description}
               </p>
@@ -76,7 +77,7 @@ const PostItem: React.FC<PostItemProps> = ({
               />
             </div>
           </div>
-          <PostMetadata title={title} metadata={metadata} date={date} />
+          <PostMetadata title={title} metadata={metadata} date={date} dateType={dateType} />
         </Link>
 
         <p className={"mb-2 mt-1 line-clamp-2 font-ubuntu text-sm text-muted-foreground"}>

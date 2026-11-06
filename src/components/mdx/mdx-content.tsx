@@ -5,6 +5,7 @@ import CustomImage from "./custom-image";
 import CustomLink from "./custom-link";
 
 const sharedComponents = {
+  h1: (props: React.ComponentProps<"h2">) => <h2 {...props} />,
   CustomImage,
   CustomLink,
   YouTubeEmbed,

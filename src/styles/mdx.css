@@ -213,3 +213,19 @@
 .mdx-content ul a {
   @apply transition-colors duration-200;
 }
+
+/* Article navigation shares the existing floating-control and modal layers. */
+.article-toc-pill {
+  position: fixed;
+  z-index: 40;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  width: min(20rem, calc(100vw - 10rem));
+  transform: translateX(-50%);
+}
+.article-toc-panel {
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+}
+.mdx-content :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 6rem;
+}

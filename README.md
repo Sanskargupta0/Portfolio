@@ -7,7 +7,7 @@
 
 ## 📝 Project Description
 
-A modern, responsive personal portfolio website built with Next.js 14 that showcases projects, skills, and blog posts. This portfolio features a dark theme design, internationalization support, GitHub contributions visualization, contact form integration, and a complete blog system with MDX support. The application includes view tracking, search functionality, and is optimized for SEO with dynamic metadata generation.
+A modern, responsive personal portfolio website built with Next.js 14 that showcases projects, skills, and blog posts. This portfolio features a dark theme design, English-language content, GitHub contributions visualization, contact form integration, and a complete blog system with MDX support. The application includes view tracking, search functionality, and is optimized for SEO with dynamic metadata generation.
 
 ## ⚙️ Tech Stack
 
@@ -19,7 +19,7 @@ A modern, responsive personal portfolio website built with Next.js 14 that showc
 - **Deployment**: Vercel
 - **Analytics**: Vercel Analytics & Speed Insights
 - **UI Components**: Radix UI, Lucide React
-- **Internationalization**: next-i18next (EN, ES support)
+- **Language**: English
 - **External APIs**: 
   - NoCode API (Google Sheets integration)
   - Web3Forms (Contact form)
@@ -37,7 +37,7 @@ A modern, responsive personal portfolio website built with Next.js 14 that showc
 
 👉 **Blog System**: 
 - Full-featured blog with MDX support
-- Multiple language support (English, Spanish)
+- English-language content
 - Table of contents generation
 - Syntax highlighting for code blocks
 - SEO-optimized blog posts
@@ -61,7 +61,7 @@ A modern, responsive personal portfolio website built with Next.js 14 that showc
 
 👉 **Search Functionality**: Built-in search for blog posts and content discovery.
 
-👉 **Internationalization**: Multi-language support with easy language switching between English and Spanish.
+English is the supported language for the website and blog.
 
 👉 **Performance Optimized**: 
 - Image optimization with Next.js Image component
@@ -81,7 +81,7 @@ A modern, responsive personal portfolio website built with Next.js 14 that showc
    - Contact form with external integrations
 
 2. **Content Management**:
-   - MDX files for blog posts in multiple languages
+   - MDX files for English blog posts
    - Velite for content processing and optimization
    - Dynamic routing for blog posts and projects
    - Automatic table of contents generation
@@ -324,7 +324,6 @@ access_key: "your_web3forms_access_key"
 
 Update author information in:
 - `src/locales/en/blog.json`
-- `src/locales/es/blog.json`
 
 ## 🔧 Development Commands
 
@@ -377,10 +376,10 @@ portfolio/
 │   │   ├── project/             # Project components
 │   │   └── ui/                  # UI components
 │   ├── content/                 # Blog content (MDX)
-│   │   └── posts/               # Blog posts by language
+│   │   └── posts/               # English blog posts
 │   ├── lib/                     # Utility functions
 │   ├── constants/               # Application constants
-│   ├── locales/                 # Internationalization
+│   ├── locales/                 # English interface text
 │   ├── styles/                  # Global styles
 │   └── types/                   # TypeScript types
 ├── public/                      # Static assets
@@ -392,7 +391,7 @@ portfolio/
 
 ### Adding Blog Posts
 
-1. Create a new MDX file in `src/content/posts/[language]/`
+1. Create a new MDX file in `src/content/posts/en/`
 2. Follow the frontmatter structure:
 
 ```mdx

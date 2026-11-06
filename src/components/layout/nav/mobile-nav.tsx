@@ -10,8 +10,8 @@ const MobileNav = () => {
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger>
-        <Menu />
+      <SheetTrigger aria-label="Open navigation menu">
+        <Menu aria-hidden="true" />
       </SheetTrigger>
       <SheetContent side="left" className="px-4">
         <SheetHeader>
@@ -22,7 +22,7 @@ const MobileNav = () => {
 
         <div className="flex flex-col gap-4">
           <NavList setOpen={setOpen} />
-          <div className="flex items-center justify-between pt-4 border-t border-border">
+          <div className="flex items-center justify-between border-t border-border pt-4">
             <span className="text-sm text-muted-foreground">Theme</span>
             <ThemeToggle />
           </div>
