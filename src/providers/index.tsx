@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 
+import PetCat from "~/components/pet-cat";
 import ScrollProgress from "~/components/scroll-progress";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import TopLoader from "~/components/ui/top-loader";
@@ -15,6 +16,7 @@ const RootProviders = ({ children }: { children: ReactNode }) => {
       <I18nProvider>
         <ReactQueryProvider>
           <TooltipProvider>
+            <PetCat />
             <ScrollProgress />
             <TopLoader />
             {children}
