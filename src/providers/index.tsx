@@ -12,7 +12,7 @@ import { ThemeProvider } from "~/components/providers/theme-provider";
 
 const RootProviders = ({ children }: { children: ReactNode }) => {
   return (
-    <ThemeProvider defaultTheme="system" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="system" storageKey="portfolioTheme" enableSystem disableTransitionOnChange>
       <I18nProvider>
         <ReactQueryProvider>
           <TooltipProvider>
