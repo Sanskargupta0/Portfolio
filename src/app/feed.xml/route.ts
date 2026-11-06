@@ -19,16 +19,17 @@ export async function GET() {
 
   const englishPosts = posts.filter((post) => {
     const postLanguage = post.slug.split("/")[1];
-    return postLanguage === "en";
+    return postLanguage === "en" && post.published;
   });
 
   englishPosts.forEach((post) => {
     feed.item({
       title: post.title,
-      url: BasePath(`/blog/${post.slugAsParams.split("/")}`),
+      url: BasePath(`/blog/${post.slugAsParams}`),
       date: post.date,
       description: post.description,
-      author: "Sanskar Gupta",
+      author: post.author ?? undefined,
+      categories: post.tags,
     });
   });
 

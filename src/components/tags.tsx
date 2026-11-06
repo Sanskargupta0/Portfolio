@@ -4,7 +4,7 @@ import { buttonVariants } from "./ui/button";
 
 const Tags = ({ tags }: { tags: string[] }) => {
   return (
-    <ul className="space-x-2" role="list">
+    <ul className="flex flex-wrap gap-x-3 gap-y-1" role="list">
       {tags.map((tag, index) => (
         <Tag key={index} tag={tag} />
       ))}

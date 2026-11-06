@@ -1,32 +1,21 @@
 import { posts } from "#site/content";
+import { slug } from "github-slugger";
 import { MetadataRoute } from "next";
 import { BasePath } from "~/lib/utils";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const blogPosts = posts.map((post) => ({
-    url: BasePath(`/blog/${post.slugAsParams.split("/")}`),
-    lastModified: post.date,
+export default function sitemap(): MetadataRoute.Sitemap {
+  const publishedPosts = posts.filter((post) => post.published);
+  const blogPosts = publishedPosts.map((post) => ({
+    url: BasePath(`/blog/${post.slugAsParams}`),
+    lastModified: post.updatedAt ?? post.importedAt ?? post.date,
   }));
+  const tagPages = Array.from(
+    new Set(publishedPosts.flatMap((post) => post.tags.map((tag) => slug(tag))))
+  ).map((tag) => ({ url: BasePath(`/tags/${tag}`) }));
 
   return [
-    {
-      url: BasePath(""),
-      lastModified: new Date(),
-    },
-
-    {
-      url: BasePath("/blog"),
-      lastModified: new Date(),
-    },
-    {
-      url: BasePath("/projects"),
-      lastModified: new Date(),
-    },
-    {
-      url: BasePath("/about"),
-      lastModified: new Date(),
-    },
-
+    ...["", "/blog", "/projects", "/tags"].map((path) => ({ url: BasePath(path) })),
     ...blogPosts,
+    ...tagPages,
   ];
 }

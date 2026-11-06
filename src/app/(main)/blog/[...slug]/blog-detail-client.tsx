@@ -7,7 +7,7 @@ import BackButton from "~/components/back-btn";
 import { MDXContent } from "~/components/mdx";
 import { PostMetadata, TableOfContent } from "~/components/post";
 import Tags from "~/components/tags";
-import LanguageSwitcher from "~/components/language-switcher";
+import { useRef } from "react";
 import { cn } from "~/lib/utils";
 
 interface BlogDetailClientProps {
@@ -16,12 +16,12 @@ interface BlogDetailClientProps {
 
 export default function BlogDetailClient({ post }: BlogDetailClientProps) {
   const { t } = useTranslation(["common", "blog"]);
+  const articleRef = useRef<HTMLElement>(null);
 
   return (
-    <article className="w-full">
+    <article ref={articleRef} lang="en" className="w-full pb-16">
       <div className="flex items-center justify-between">
         <BackButton>{t("common:blog.backToPosts")}</BackButton>
-        <LanguageSwitcher />
       </div>
       <div className="mb-6 mt-2 space-y-6">
         <PostMetadata
@@ -29,10 +29,9 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
           title={post.title}
           metadata={post.metadata}
           date={post.date}
+          dateType={post.dateType}
           slug={post.slugAsParams}
         />
-
-        <TableOfContent toc={post.toc} />
 
         <div className="relative aspect-video">
           <Image
@@ -51,6 +50,8 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
       <main id="main-content" className={cn("mdx-content prose prose-invert max-w-none")}>
         <MDXContent code={post.body} />
       </main>
+
+      <TableOfContent key={post.slug} toc={post.toc} articleRef={articleRef} />
 
       <div className="my-4 space-y-1">
         <hr className="!mb-4" />

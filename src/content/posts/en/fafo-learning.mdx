@@ -1,0 +1,174 @@
+---
+title: "How to Fuck Around and Find Out"
+description: "Learn programming through nonlinear exploration, information maps, targeted questions, and hands-on experiments that reveal gaps in your understanding."
+tags: ["learning-to-code","learning-methods","problem-solving","programming-fundamentals"]
+date: "2026-10-26"
+updatedAt: "2026-11-06"
+dateType: "editorial"
+published: true
+author: null
+importedAt: "2026-11-05"
+cover: "./images/cover/articles/fafo-learning.png"
+originalPublishedAt: "2026-08-22"
+---
+
+Hey, it's been a while since i wrote the last article. In this article i'm going to talk about "How to learn?" & "How to fuck around and find out"
+
+It's not about just code or academia, it's the core problem i faced with learning and how i learned to learn in a very unconventional way.
+
+But before talking about that i think its worth understanding the conventional way most people learn, so we have a little better understanding on why this unconventional way of learning might be good for you.
+
+## The problem with conventional learning
+
+Conventionally we are taught to learn in a linear way. for example
+
+If you wanted to learn web-sockets, in order to learn web-socket you first need to learn about
+
+TCP -> HTTP -> WebSocket upgrade handshake -> web-sockets
+
+this is how you would learn web-sockets. But there are couple of problems with this approach.
+
+1.  You might drop off in between because the WebSocket upgrade handshake doesn't make any sense
+2.  You skipped one topic in between
+3.  You didn't even know what a protocol is and yet you started from TCP
+
+in short the problem is with understanding. you might have/had less context or you skipped or misunderstood a piece of information without knowing.
+
+If you misunderstood something you will get to know the misunderstanding once you reach web-socket. you will realize how shallow your understanding was about http or maybe about TCP since the beginning and that wastes a lot of time relearning and enforcing new info in the brain.
+
+It happened with me multiple times actually.
+
+### The asymmetric encryption
+
+In my college around 2nd year i learned about `asymmetric encryption` and the concept of public and private key.
+
+if you encrypt a message or information with private key then only private key can decrypt it
+
+but i never understood how you send the keys over from server to client. if you send the private key over the internet to the client then what's the point.
+
+It's a security flaw?
+
+with this misunderstanding i graduated from my college (almost) and when i was having a convo with one of the senior devops engineer and i was understanding how website SSL certs work, asymmetric encryption was one of the key concepts being used there.
+
+when he said we encrypt with private key and send the encrypted message + public key to the client and i was like how the client is going to decrypt it?
+
+He smiled and understood the knowledge gap, explained the whole asymmetric encryption from scratch and then i understood how it works.
+
+in short: you never send the private key over the internet. the server keeps the private key. the public key is meant to be public, you can send it freely.
+
+what messed me up was mixing up encryption and signing. they both use the same keys but do different jobs.
+
+-   **encrypt for secrecy:** encrypt with the recipient's **public** key, decrypt with their **private** key
+-   **sign for proof:** sign with your **private** key, verify with your **public** key. the client is not decrypting a secret message here, they are checking "yeah this really came from the holder of the private key"
+
+SSL/TLS uses asymmetric crypto for authentication and key exchange, then switches to faster symmetric encryption for the actual data. my linear-learning gap was treating "private key" as one thing when signing and encryption are two different jobs.
+
+now you know why linear learning has some flaws. for a lot of people it might be good but for me personally one misunderstood concept or knowledge gap can ruin your whole understanding in the future.
+
+### Other issues with linear learning
+
+There are few other issues with linear learning such as forming connections.
+
+You don't know what's the point of learning XYZ thing right now.
+
+But you do it anyways assuming that it will in future connect with some ABC topic and give us the complete picture.
+
+Another issue is that since we are moving linearly, asking questions becomes harder and understanding stays shallow as we progress. you are collecting pieces without knowing how they fit, so you stop asking "wait why?" and just move on.
+
+So now you know the flaws and issues with Linear / Conventional Learning.
+
+## The unconventional way
+
+In the unconventional / non-linear way of learning you will learn something like this
+
+WebSockets -> WebSocket upgrade handshake -> HTTP -> TCP -> Protocol
+
+You will start from the topic itself. you will read and as soon as something unfamiliar hits you, you just branch it and go deeper while asking questions.
+
+![Article diagram 1](/blog/imported/fafo-learning/diagram-1.svg)
+
+WebSocket information map after reading the definition
+
+As you can see in the above image.
+
+I started reading the definition of websocket and tried forming some connections and did a little bit of branching.
+
+As i was getting new words i was just adding them into canvas and trying to form connections. by the end of the web-socket definition i was left with this.
+
+As soon as this happened i added the arrows (connections) and asked questions on each step mainly on `what`, `why`, `how`.
+
+## Information Map
+
+Once the questions are there and a rough diagram is up, i call it an Information Map.
+
+You basically created a map of where you need to traverse now in order to understand web-socket more deeply.
+
+Now all you are left to do is traverse each of the domains in order to concrete the understanding. go deep on the branches that block you, skip the ones that don't matter right now.
+
+That's the whole thing. start at what you care about, map what you don't know, fill the gaps on purpose.
+
+## Benefits of non-linear learning
+
+Now i don't think i need to tell you the benefits of this approach. But still
+
+1.  You can start with whatever interests you
+2.  Just start reading and find the knowledge gaps
+3.  Cover the gaps in order to understand the full picture
+4.  No need to worry about linearity (ofc)
+5.  You catch wrong beliefs earlier because you are forced to connect ideas, not just collect them
+6.  No need to push yourself
+7.  Maps help you choose depth on purpose instead of drifting into random rabbit holes
+8.  You will understand concepts from the core not just superficial
+
+and so on so forth.
+
+I can talk about this a lot.
+
+## A foolproof framework (FAFO edition)
+
+Since now we know the pain of linear learning and the benefits of non-linearity, let me tell you that you can convert this into a foolproof system / framework.
+
+This is basically "fuck around and find out" with a map so you don't get lost.
+
+This works for both programming and non-programming things.
+
+**The core loop**
+
+1.  Start with a problem
+2.  Visualize what you currently think
+3.  Ask questions
+4.  Branch based on curiosity
+5.  Go deep only where needed
+6.  Read docs / theory
+7.  Make visual notes (and atomic Obsidian notes if that's your thing)
+
+**If you are coding, add this on top**
+
+8.  Code it
+9.  Predict before running
+10.  Tweak / break it
+11.  Compare prediction vs reality
+12.  Fix your mental model
+13.  Explain from memory
+14.  Connect notes to existing knowledge
+
+Steps 8-11 is the FAFO part. you guess, you run it, you see where reality disagrees, you fix the map.
+
+## Tools
+
+You can use excalidraw, tldraw, ipad, tablet for visualization. You can use notion, ticktick, goodnotes, obsidian for atomic notes.
+
+## When linear learning still makes sense
+
+I'm not saying linear learning is useless. for exam syllabus, courses, or foundational stuff where order actually matters (basic math before calculus type things), linear can be fine.
+
+The unconventional way shines when you are learning because you **need** something now, not because a syllabus told you to.
+
+## Final Words
+
+That's it for the blog.
+
+Try picking one thing you actually want to learn this week, read the definition, branch every word you can't explain, draw the map, and traverse the gaps. you'll feel the difference pretty fast.
+
+see you in the next one.
+

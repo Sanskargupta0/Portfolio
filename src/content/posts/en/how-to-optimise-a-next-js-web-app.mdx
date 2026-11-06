@@ -1,0 +1,273 @@
+---
+title: "How to optimise a Next.js web app"
+description: "Improve Next.js performance with smaller bundles, optimized images, caching, rendering strategies, and React Server Components for better Core Web Vitals."
+tags: ["nextjs","react","web-performance","core-web-vitals","server-side-rendering","frontend-development"]
+date: "2026-03-02"
+updatedAt: "2026-11-06"
+dateType: "editorial"
+published: true
+author: null
+importedAt: "2026-11-05"
+cover: "./images/cover/articles/how-to-optimise-a-next-js-web-app.png"
+originalPublishedAt: "2026-01-31"
+---
+
+So in this blog, I’m going to talk about React's and Next. Js best practices. This blog will contain landing page and functional both types of optimisations.
+
+Let’s get started, but before, let me mention common terms that will be used in this blog.
+
+1.  [First Contentful Paint (FCP)](https://web.dev/articles/fcp)
+2.  [Largest Contentful Paint (LCP)](https://web.dev/articles/lcp)
+3.  [First Input delay (FID)](https://web.dev/articles/inp)
+
+Google uses metrics (web vitals) to rank a website on search pages. You can use tools like [pagespeed analytics tool](https://pagespeed.web.dev/) to check the current score of the website/web page.
+
+Below is a reference
+
+![Bundle Size](/blog/imported/how-to-optimise-a-next-js-web-app/pagespeed-analytics.png)
+
+Example PageSpeed report
+
+If everything is under the green area. No improvement is needed Web Vital-wise, but it doesn't mean you should stop reading this blog right now, as there are a lot of tips that _might_ help you optimise the performance of your app.
+
+### 1 . Bundle Size  
+
+A bundle is a JavaScript file that we send to the user’s browser to execute the logical or UI part of a frontend application. Ideally, the bundle size should be **~500 KB**, but in most cases, or due to UI libraries or different dependencies, the bundle size tends to increase. Make sure it’s not exceeding **1500 KB** keep it under that.
+
+How you will do that?
+
+First, you need to check what the current bundle size of the page is. If you are on **Next.Js 16 or above**, then there is a CLI command available to analyse it.
+
+````
+npx next experimental-analyze
+````
+
+Refer this [Doc](https://nextjs.org/docs/app/guides/package-bundling)
+
+It will look something like this 👇
+
+![Bundle Size Analysis using Next.Js CLI](/blog/imported/how-to-optimise-a-next-js-web-app/bundle-size-analysis.png)
+
+Bundle Size Analysis using Next.Js CLI
+
+You can use external packages for React, Next.Js to get the approx bundle size.
+
+To reduce bundle size
+
+1.  Find and eliminate unused library import.
+    
+2.  Remove external libraries as much as possible
+    
+
+If you are using a library for something that can be replaced with one or two functions, replace the library with your own implementation. For example you are using `react-video` library for Resolution setting in the video you could just remove the library with a simple function.
+
+The library increasing bundle size `~300 kb` that can be reduced + your own implementation will take less of bundle size.
+
+3.  Use specifc imports instead of importing everything.
+
+There are a lot of packages / libraries that does Barrel export. Mean a single file like `index.ts` have all the exports.
+
+````
+export * from "./LoaderIcon.tsx"
+export * from "./Moon.tsx"
+export * from "./Sun.tsx"
+````
+
+So when you import anything from the `index.ts` file it import the whole file.
+
+````
+import { LoaderIcon } from '@lucide/react' (size: ~2MB (potentially))
+````
+
+Now someone who read webpack or turbopack implementation knows that barrel imports get optimized. Which is correct but not in case of when you are importing from `node_modules` web/turbo pack ignore barrel imports if they are from `node_modules`.
+
+So instead of importing like above pattern use below pattern.
+
+````
+import LoaderIcon from '@lucide/react/disk/icon/LoaderIcon.tsx'
+````
+
+This will insure you are importing only what is needed.
+
+You can also add the following thing in your `next.config.ts` [Official Doc](https://nextjs.org/docs/app/api-reference/config/next-config-js/optimizePackageImports)
+
+````
+module.exports = {
+  experimental: {
+    optimizePackageImports: ['package-name'],
+  },
+}
+````
+
+By doing this nextjs will automatically going to optimise the package for you.
+
+### 2\. Optimising FCP & LCP
+
+To optimise First Contentful Paint (FCP) in Next. Js, you should focus on delivering the critical content as quickly as possible by prioritising resources above the fold and reducing render-blocking assets.
+
+1.  **Use the `<Image>` Component:** Replace standard `<img>` tags with the Next.js [Image component](https://nextjs.org/docs/app/api-reference/components/image). This component automatically optimizes images, uses modern formats like WebP, and implements lazy loading by default. But only if you are hosting on vercel or have setup own CDN server or using any CDN server so make sure that you have CDN in place.
+
+-   **Use the `priority` property for LCP image:** Apply the priority prop to the image that appears in the initial viewport (the LCP element). This disables lazy loading for that specific image and adds a preload link in the HTML head, ensuring it's fetched as early as possible.
+    
+-   **Avoid lazy loading in-viewport images:** Do not use `loading="lazy"` or other JavaScript-based lazy loading solutions for images that are "above the fold". This delays the image's loading until the JavaScript is executed, increasing LCP.
+    
+-   **Use LQIP to increase the percieved speed**: **LQIP** (Low quality image placeholders) increase the perceived speed watch the following video to understand the concept of it. [Video Link](https://youtu.be/s0i-4IZOvi4?si=dUDyabxaiLMTFPfo)
+    
+
+2.  [`next/font`](https://nextjs.org/docs/app/api-reference/components/font) automatically optimizes your fonts (including custom fonts) and removes external network requests for improved privacy and performance.
+3.  **`Defer or async` 3rd party services:** Load other scripts like Tracking services (PostHog, umami, GTAG) after the page delivery. Do not try to load everything all together in content delivery you can use `next/dynamic` to load them after hydration is done.
+4.  Use SSR (Server Side Rendering) as much as possible.
+
+## 3\. Rendering Strategies (SSR, SSG, ISR, CSR)
+
+Next.js supports multiple rendering strategies. Choosing the correct strategy has a **direct impact on Web Vitals**, especially **FCP**, **LCP**, and **TTFB** (Time To Firsts Byte).
+
+### 3.1 Static Site Generation (SSG)
+
+In SSG, HTML is generated at build time and served via CDN.
+
+**When to use:**
+
+-   Landing pages
+-   Marketing pages
+-   Documentation
+-   Content that does not change frequently
+
+**Why it helps performance:** Because of No server computation at request time, Since its serving via CDN so its have Extremely low TTFB and Best possible FCP and LCP
+
+### 3.2 Incremental Static Regeneration (ISR)
+
+ISR allows you to regenerate static pages at a fixed interval.
+
+`export const revalidate = 60`
+
+**When to use:**
+
+-   Blogs
+-   Product pages
+-   Content-driven applications
+
+**Why it helps performance:**
+
+-   Keeps pages static for most requests
+-   Avoids full rebuilds
+-   Maintains good LCP while keeping data fresh
+
+### 3.3 Server-Side Rendering (SSR)
+
+SSR generates HTML on **every request**.
+
+**When to use:**
+
+-   SEO-critical pages with highly dynamic data
+-   Pages requiring request-time personalization
+
+**Trade-offs:**
+
+-   Increased server load
+-   Higher TTFB compared to SSG / ISR
+-   Backend latency directly affects frontend performance
+
+### 3.4 Client-Side Rendering (CSR)
+
+CSR renders content entirely in the browser. (This is what plain react it and we get in default Vite + React app)
+
+**When to use:**
+
+-   Dashboards
+-   Authenticated internal tools
+-   Highly interactive applications
+
+**Downside:**
+
+-   Poor FCP and LCP
+-   SEO is affected
+-   Heavy hydration cost
+
+## 4\. React Server Components (RSC)
+
+React Server Components allow components to run **only on the server** and send rendered output to the client **without shipping JavaScript**.
+
+### Why RSC improves performance
+
+-   Reduces JavaScript bundle size
+-   Eliminates hydration for server components
+-   Improves INP and overall responsiveness
+
+By default, all components in the Next.js App Router are **Server Components**.
+
+Only components marked with `"use client"` are sent to the browser. Avoid marking entire pages as client components.
+
+Instead make a child component and make it client sided, This ensures only required JavaScript is shipped.
+
+## 5\. Code Splitting and Dynamic Imports
+
+Next.js performs route-level code splitting automatically, but **component-level splitting** is still required for large client-side features.
+
+Use dynamic imports when dealing with -
+
+-   Heavy components (charts, editors)
+-   Client-only libraries
+
+````
+const Chart = dynamic( () => 
+	import("./Chart"), 
+	{ ssr: false }
+)
+````
+
+Do not use them when -
+
+-   Small shared components
+-   Above-the-fold UI
+-   Layout components
+
+Excessive dynamic imports increase network requests and can cause loading waterfalls.
+
+## Checklist
+
+Check the below things before pushing your code to production:
+
+Low Priority
+
+-   Use WOFF2 font format
+-   Use preconnect to load your fonts faster
+-   Keep an eye on the size of the dependencies
+-   Pre-load URLs where possible
+
+Medium Priority
+
+-   Use CDN for Images, video and even serving your pages.
+-   Avoid Base 64 images
+-   Keep your dependencies up to date
+-   Use vector images rather than bitmap images
+-   Check for performance problems in your JS files
+-   Offload heavy tasks to service workers
+
+High Priority
+
+-   Keep your page &lt; 1500 kb (ideally &lt; 500 kb)
+-   Minimize HTTP Requests
+-   Page load time &lt;3 seconds
+-   Non Blocking JavaScript (use async or defer)
+-   Use HTTPs on your website
+-   Keep the TTFB &lt; 1.3 seconds
+-   Set HTTP cache header properly
+-   Avoid requesting unreachable files (404)
+-   Minify your css (If using raw css)
+-   Choose webp over png or jpg
+
+* * *
+
+Now I know there are a lot of topics and things that also help with optimisation, but I’m not covering them here as they are mostly about writing better code, e.g., Hydration, UseEffect, Animations, etc. We will cover those in the future or in a different blog.
+
+## Links / Resources / References
+
+-   [Vercel Dashboard optimisation blog](https://vercel.com/blog/how-we-made-the-vercel-dashboard-twice-as-fast)
+-   [Next.Js Package Optimization](https://vercel.com/blog/how-we-optimized-package-imports-in-next-js)
+-   [Cached Componets](https://nextjs.org/docs/app/getting-started/cache-components)
+-   [Caching & Revalidation](https://nextjs.org/docs/app/getting-started/caching-and-revalidating)
+-   [Server VS Client components](https://nextjs.org/docs/app/getting-started/server-and-client-components#server-side-rendering)
+-   [Lazy Loading](https://nextjs.org/docs/app/guides/lazy-loading)
+-   [Hydration](https://react.dev/reference/react-dom/client/hydrateRoot)
+-   [Frontend Best Practices](https://roadmap.sh/frontend-performance-best-practices)

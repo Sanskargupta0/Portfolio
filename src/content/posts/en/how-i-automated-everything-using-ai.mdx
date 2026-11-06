@@ -1,0 +1,390 @@
+---
+title: "How I Automated Everything Using AI!"
+description: "Build AI-powered workflows with Hermes Agent, command-line tools, scheduled jobs, and human approvals to automate everyday tasks on a Linux VPS."
+tags: ["ai-agents","workflow-automation","hermes-agent","developer-productivity","linux"]
+date: "2026-04-20"
+updatedAt: "2026-11-06"
+dateType: "editorial"
+published: true
+author: null
+importedAt: "2026-11-05"
+cover: "./images/cover/articles/how-i-automated-everything-using-ai.png"
+originalPublishedAt: "2026-04-23"
+---
+
+## The Starting & Problems
+
+So i was using [OpenClaw](https://github.com/openclaw/openclaw) on my VPS for a while and i setup couple of workflows like -
+
+1.  Set Automated Punch out reminder based on my punch in time in [TickTick](https://ticktick.com)
+2.  Generate notes from Meeting Transcript
+3.  Manage my schedule based on my current schedule
+
+And a couple more use cases. But I hit the wall of limits soon. OpenClaw is really bad with context after a point.
+
+Every time you start a fresh session, OpenClaw attaches most of the .MD files it made, personality, memory, tools, and a lot.
+
+And that degrades the quality over time as the more it grows, the more bad the context starts to get.
+
+For example, I said.
+
+````
+================
+    Expected
+================
+
+Me: Punch In
+OpenClaw: Punch Out at 5:00 P.M.
+(should get my current IST time at Punch In time and set punch out after 8h 5m. In Ticktick)
+
+================
+    Actual
+================
+
+Me: Punch In
+OpenClaw: Punch Out at 5:00 P.M. 
+(Used UTC time and set a cron instead in fresh session)
+````
+
+![OpenClaw Punch-in Error](/blog/imported/how-i-automated-everything-using-ai/openclaw-punchin-error.png)
+
+This is one of the smallest skills I created, and it messes it up every time. And the other thing was OpenClaw was not that secure, even if you added a firewall. Only one person can message and run inside Docker. But no GuardRails for AI to stop.
+
+So i move to different ai quickly which was [Hermes](https://github.com/nousresearch/hermes-agent). It's a **self-improving** AI agent that grows over time. And it has an in-built guardrail setup. Every sensitive command needs your approval. You can choose to
+
+1.  Allow once
+2.  Allow in the session
+3.  Allow every time
+4.  Deny
+
+And this is what I wanted. Hermes by default has a simple context system. SOUL.md, personality, & Tools for context, and every tool has its context.
+
+![Hermes context and tool architecture](/blog/imported/how-i-automated-everything-using-ai/diagram-1.svg)
+
+## Hermes Setup
+
+### Hardware
+
+-   Hosted on: VPS (by Hostinger KVM 2 - Not Affiliated)
+-   Specs
+    -   Cores: 2
+    -   RAM: 8 GB
+    -   Storage: 100 GB NvME
+-   OS: Ubuntu 24 LTS
+
+![Hermes VPS Specs](/blog/imported/how-i-automated-everything-using-ai/hermes-vps-specs.png)
+
+### Software
+
+How i actually set it up -
+
+1.  Firewall to drop all incoming requests.
+2.  ACCEPT TCP PORT 22
+3.  Created a new non Sudo user named `hermes`
+4.  Installed Hermes using the below command
+
+````
+curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+````
+
+The Hermes will be installed at `~/.hermes`
+
+Now in Hermes Setup i used
+
+1.  Telegram as messaging gateway.
+2.  Allowed only my user id to response on messages.
+
+### Models
+
+For models providers i'm using:
+
+1.  OpenAI Codex
+2.  Github Copilot
+3.  GLM Coding Plan
+4.  Minmax
+5.  Anthropic
+
+![Hermes Models](/blog/imported/how-i-automated-everything-using-ai/hermes-models.png)
+
+The only notable models that works best are:
+
+1.  Claude sonnet 4.6
+2.  Claude Opus 4.6
+3.  ZLM 5.1
+4.  Gpt-5.3-codex
+
+Currently using ZLM 5.1 as its cheaper and handles most of the tasks.
+
+By default you cannot use z.ai coding plan so you to following thing while setup.
+
+1.  Run `hermes model`
+2.  Select `z.ai`
+3.  Pass this base url `https://api.z.ai/api/coding/paas/v4` From `https://api.z.ai/api/paas/v4`
+4.  Select GLM 5.1 or 4.7
+
+![Hermes Z.ai Setup](/blog/imported/how-i-automated-everything-using-ai/hermes-zai-setup.png)
+
+### Tools & Skills
+
+I setup the following CLI's, Skills, Tools as of now
+
+### CLI's
+
+1.  [GH CLI](https://cli.github.com/)
+3.  [Claude Code](https://claude.com/product/claude-code)
+4.  [Tesseract](https://github.com/tesseract-ocr/tesseract)
+5.  [BlogWatcher](https://github.com/Hyaxia/blogwatcher)
+6.  [Tavily Web Search](https://www.tavily.com/)
+
+### Enabled Tools
+
+1.  Web - Web Search & Scraping
+2.  Browser - Browser Automation
+3.  Terminal - Terminal & Processes
+4.  File - File Operations
+5.  Code\_execution - Code Execution
+6.  Vision - Vision / Image Analysis
+7.  Image\_gen - Image Generation
+8.  Tts - Text-to-Speech
+9.  Skills - Skills
+10.  Todo - Task Planning
+11.  Memory - Memory
+12.  Session\_search - Session Search
+13.  Clarify - Clarifying Questions
+14.  Delegation - Task Delegation
+15.  Cronjob - Cron Jobs
+
+### Context & Other Configs
+
+In the `SOUL.md` file which is at `~/.hermes/SOUL.md` since the file's content always attached on the prompt every time so i used as Index for other memories Below is how my `SOUL.md`
+
+````
+# Hermes Soul
+
+the user's personal agent. IST timezone. No emojis, no tables, plain text.
+
+## Memory Files
+
+All runtime memory lives in ~/.hermes/memory/:
+
+Read necessary files before doing in task:
+
+- core.md -- who the user is, preferences, GitHub rules
+- morning-cron.md -- Mon-Fri 6AM gym prep cron
+- weekly-review-cron.md -- Sun 10PM weekly review cron
+- calorie-cron.md -- Daily 9:30PM calorie check-in
+- ticktick.md -- CLI usage, broken flags, API fallbacks
+- workout-split.md -- 5-day rotation, exercises to avoid
+- daily-log-workflow.md -- step-by-step log creation flow
+- tools.md -- Obsidian, backup, OCR, blogwatcher
+- punch-in-out.md -- work punch-in/punch-out procedure
+
+## Using claude 
+
+- You will find files, generate context, and all the stuff. Claude will be the brain that will do just one specific thing and just give an answer. Like a teacher, it will not do; it will just say things.
+usages:
+terminal(command="claude -p \"<clear task>\" --max-turns 15 --output-format json")
+
+if you want to use thinking then 
+terminal(command="claude -p \"<clear task>\" --model opus --max-turns 15 --output-format json")
+
+## Check the following before proceed to do task:
+
+[ ] I've read the correct memeory file before proceeding to do the task.
+[ ] I've generated context and created a single prompt with single output for claude
+````
+
+In each of memory file it have its own context for the task.
+
+For example in `tools.md`
+
+````
+# Obsidian
+- Vault: ~/work/second-brain
+- Repo: developer/second-brain, default branch: master (not main)
+- CLI: ov at ~/.local/bin/ov
+- Weekly fitness reviews: 03_Projects/Fitness
+
+# Backup
+- Repo: developer/hermes, script ~/hermes-backup/backup.sh, cron 6h IST
+
+# Architecture Diagrams
+- Repo: developer/architecture-repo, default branch: main
+- Local: ~/work/architecture-repo
+- Hosted at: https://architecture.example.com
+- Uses architecture-diagram skill (dark theme, inline SVG)
+- Categories: networking, backend, frontend, devops, database
+- Add diagram -> create in diagrams/<category>/ -> update index.html stats + card
+
+# OCR (Image Processing)
+- Use codex exec for ALL screenshot parsing (fitness app, nutrition, activity, sleep):
+  `codex exec -m gpt-5.4-mini -i <image_path> --sandbox read-only "<prompt>"`
+- Do NOT use tesseract or vision_analyze for image data extraction
+- Details in calorie-cron.md and daily-log-workflow.md
+
+# Blogwatcher
+- ~/bin/blogwatcher-cli
+- Feeds: HN, TechCrunch, The Verge, Ars Technica, The Hacker News
+
+## Todo:
+
+[ ] I've read above rules before proceeding with the tasks.
+````
+
+## The Daily Workflow
+
+Let's talk about some of my workflows and how it works.
+
+### The Daily GYM cron
+
+#### Step 1: Ask the user for sleep + mood, get yesterday's nutrition
+
+-   Ask the user: "How did you sleep? How are you feeling?"
+-   Wait for the user's reply (NEVER auto-create)
+-   Pull yesterday's log from TickTick (Body & Health) to get nutrition data
+-   Use tesseract CLI for the user's diet, steps/activity & sleep screenshots (not vision\_analyze)
+
+#### Step 2: Get the weekly review from second brain
+
+-   Read the most recent weekly review from ~/work/second-brain/03\_Projects/Fitness/
+-   This gives the coach context about what's lagging, what to prioritize, what to drop
+
+#### Step 3: Pull last 2-3 same-day sessions + gym equipment list
+
+-   Determine today's split day (Day 1-5 rotation)
+-   Find the last 2-3 sessions of the same split from TickTick logs
+-   Get the gym equipment list from TickTick (Body & Health, "Gym Equipment Based on Floors")
+-   This gives progressive overload context and ensures equipment matches available machines
+
+#### Step 4: Send to Claude opus for exercise selection
+
+-   Draft a prompt with all gathered context (sleep, mood, nutrition, last sessions, weekly review, equipment)
+-   Run: claude -p "$(cat /tmp/claude\_workout\_prompt. Txt)" --model opus --max-turns 15 --output-format json
+-   Pipe through python 3 to extract .result field, save to /tmp/todays\_workout. Txt
+-   Claude handles: exercise selection, weight/reps, progressive overload decisions, what to skip on bad days
+-   Claude does NOT handle: log formatting, TickTick operations, talking to the user
+
+#### Step 5: Compile everything and create the log
+
+-   Use Claude's output as the workout plan
+-   Add recovery snapshot (sleep from the user's input + screenshots)
+-   Add coach call (brief, 2-3 lines)
+-   Create the log in TickTick as a note in Body & Health
+-   Chat to the user: workout created + brief coach call + 1-2 line yesterday summary
+-   Do NOT dump the full workout in chat
+
+![Automated exercise logging workflow](/blog/imported/how-i-automated-everything-using-ai/diagram-2.svg)
+
+#### Exercise Format Template (for TickTick log)
+
+Every exercise in the log MUST use this format:
+
+Plate-Loaded Chest Press (← Exercise name)
+
+Expected (1 plate = 5 kg):
+
+-   Set 1: 2 plates x 12
+-   Set 2: 2 plates x 10
+-   Set 3: 2 plates x 10
+
+Actual:
+
+-   Set 1: \_\_ plates x \_\_ reps
+    
+-   Set 2: \_\_ plates x \_\_ reps
+    
+-   Set 3: \_\_ plates x \_\_ reps
+    
+-   "Expected" comes from Claude opus output (the target for today)
+    
+-   "Actual" is filled in later by the user when he completes the workout
+    
+-   For DB exercises use kg directly (e.g. "7.5 kg x 12")
+    
+-   For machine exercises use plates (note plate-to-kg conversion if needed)
+    
+-   Leave Actual as \_\_ blanks until the user reports back
+    
+
+#### Rules
+
+-   Each log = THAT DAY's data only
+-   Never auto-create without the user's reply
+-   Never write the full workout in chat
+-   Read gym equipment list before creating workout (pick correct floor/machines)
+-   Use tesseract CLI for screenshots (not vision\_analyze)
+-   Always read current content before updating
+-   Real numbers only, no blanks or placeholders
+
+#### Claude Opus Prompt Template
+
+The prompt should include:
+
+1.  Today's context (day, split, sleep, mood, yesterday's nutrition)
+2.  Last 2-3 same-day session data (actual weights/reps)
+3.  Key findings from the most recent weekly review
+4.  Gym equipment by floor (hard constraint)
+5.  Rules (avoid face pulls, deadlifts; time cap 40-45 min; 3 working sets; group by floor)
+6.  Output format (exercise name + sets, no markdown, brief notes on notable changes)
+
+![Claude Opus Workout Prompt](/blog/imported/how-i-automated-everything-using-ai/claude-opus-workout-prompt.png)
+
+### The Punch in out skill
+
+I just told Hermes to create a skill named `punch-in-out`
+
+When i say punch in do the following
+
+-   "Punch in" -> create "Punch out" task in office project in tickitck
+-   Use TickTick CLI
+-   Use `ist CLI` to get current IST time (not TZ= date)
+-   Due date = punch-in time + 8 h 5 m
+-   Reminder flag: --reminder "HH: MM" (absolute IST time, 5 min before due)
+-   Always confirm actual time with the user before creating
+
+### The Night Cron
+
+At night 9:30 P.M. the following happens:
+
+-   Asks the user for calories, fat, protein and steps walked then updates today's log in TickTick
+    
+-   Read ticktick. Md and this file before writing to any log.
+    
+-   Use skill: `ticktick-daily-log` for logging workflow
+    
+-   Use codex exec for ALL image parsing:
+    
+    -   Command: `codex exec -m gpt-5.4-mini -i <image_path> --sandbox read-only "Extract ALL nutrition and activity data from this fitness app screenshot. Return calories eaten, remaining, goal, burned, and macros (carbs, fat, protein) with consumed and target values."`
+-   Do NOT use _tesseract, vision\_analyze, or browser\_vision_
+    
+-   The calorie tracking app layout has: Base Goal, Food (consumed), Remaining, Exercise.
+    
+-   OCR can misalign these numbers. ALWAYS verify with math:
+    
+    -   Base Goal - Food Consumed = Remaining
+    -   If numbers don't add up, re-run codex with a more specific prompt
+    -   Do NOT guess or assume which number is which
+    -   Verify with the equation
+
+## Final Thoughts
+
+Just like this so far, I've got these workflows. Apart from that, I created a new GitHub user named `automation-bot` which has access to my private repos, Obsidian, and more. Of course, for safety, I've added branch protection to mistakenly not to nuke my main branch directly or push faulty code.
+
+If you have read so far, then there is a small trick. You can use small models to perform repeated complex tasks by threatening the models by saying they are peer-reviewed by other models.
+
+Example below :
+
+![Hermes Peer Review Trick](/blog/imported/how-i-automated-everything-using-ai/hermes-peer-review-trick.png)
+
+That's all and peace out!
+
+## Links
+
+1.  [GH CLI](https://cli.github.com/)
+3.  [Claude Code](https://claude.com/product/claude-code)
+4.  [Tesseract](https://github.com/tesseract-ocr/tesseract)
+5.  [BlogWatcher](https://github.com/Hyaxia/blogwatcher)
+6.  [Tavily Web Search](https://www.tavily.com/)
+7.  [OpenClaw](https://github.com/openclaw/openclaw)
+8.  [Hermes](https://github.com/nousresearch/hermes-agent)
+9.  [TickTick](https://ticktick.com)

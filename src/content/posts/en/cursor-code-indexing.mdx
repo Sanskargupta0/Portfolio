@@ -1,0 +1,220 @@
+---
+title: "A deep dive into Cursor’s Code Indexing"
+description: "Explore Cursor code indexing, Merkle trees, embedding caches, vector search, and dynamic context discovery for AI-assisted software development."
+tags: ["cursor","code-indexing","vector-search","retrieval-augmented-generation","ai-coding-tools","software-architecture"]
+date: "2026-10-12"
+updatedAt: "2026-11-06"
+dateType: "editorial"
+published: true
+author: null
+importedAt: "2026-11-05"
+cover: "./images/cover/articles/cursor-code-indexing.png"
+originalPublishedAt: "2026-07-28"
+---
+
+This research is compiled from multiple sources: Cursor's own engineering blog, official docs, its infra vendor's public case study, and third-party reverse-engineering write-ups.
+
+## How it works?
+
+When you open a project, Cursor's client looks at the folder and build's a **Merkle tree**.
+
+> **Merkle tree** - Every file gets a cryptographic hash, and every directory gets a hash derived from the hashes of its children, all the way up to a single root hash for the whole repo
+
+![Article diagram 1](/blog/imported/cursor-code-indexing/diagram-1.svg)
+
+Merkle tree of file hashes
+
+Fun fact This is the same trick Git uses internally, and for the same reason: to answer "what changed?" without re-reading everything.
+
+A small edit changes only that file's hash and the hashes of its parent directories up to the root.
+
+Cursor's client compares its local tree against the server's copy of the tree and walks only the branches where hashes diverge. Matching subtrees are skipped entirely.
+
+Anything present on the client but missing on the server gets added, anything missing on the client gets deleted server-side. The sync is one-directional it never writes back to your local files.
+
+As per Cursor: in a 50,000-file workspace, just the filenames + SHA-256 hashes come to ~3.2 MB. Without the Merkle tree, that whole 3.2 MB would move on every sync. With it, only the diverging branches move.
+
+### So why do we do this?
+
+Each file's raw text is split into "syntactic chunks" and re-embedded only when its hash changes.
+
+Cursor caches embeddings by chunk content, so unchanged chunks are never re-processed, this is what keeps a live index cheap to maintain during active editing when you are writing code or your agent doing it.
+
+### The teammate's index
+
+This is the newest piece and it's genuinely genius.
+
+Cursor observed that clones of the same repo across an organization average 92% file-hash similarity. So instead of a new teammate's machine re-embedding the entire codebase from zero:
+
+The new client computes its **Merkle tree** and derives a **simhash**
+
+> SimHash is a Locality Sensitive Hashing technique that turns text or data into a short, fixed-size fingerprint. Unlike standard hashes where tiny changes create completely different outputs, SimHash ensures that similar inputs produce similar fingerprints. It is widely used for near-duplicate detection, web crawling deduplication, and spam filtering.
+
+That simhash is used as a vector query against a database of every other simhash Cursor has for that team/user.
+
+If a close-enough match is found, Cursor seeds the new index by copying the matched one in the background, while letting the new client query it immediately.
+
+Now at first I thought it can be a security vulnerability, but as I dug deeper… The access-control trick is the interesting part: the server doesn't just trust the client's claim to "own" the matched index.
+
+It re-uses the **Merkle tree's** cryptographic property - you can only produce a given hash if you actually possess the underlying file to build content proofs.
+
+During search, results are checked against the requesting client's own tree, If the client can't prove it has a file, the result for that file is dropped.
+
+Once the client's tree fully matches the copied index (background sync finishes), the temporary proofs are deleted and search runs normally.
+
+Turbopuffer's case study (Cursor's vector-DB vendor) confirms the mechanism from the infra side: they expose an API called copy\_from\_namespace that Cursor uses for exactly this, at a "50% write discount" VS embedding fresh.
+
+![Article diagram 2](/blog/imported/cursor-code-indexing/diagram-2.svg)
+
+The teammate's index
+
+## The search System
+
+This is the "meaning-based" search.
+
+It give ai agent to ask "where do we handle auth?" Instead grep for handleAuth.
+
+What Cursor has officially confirmed:
+
+They train their own embedding model, Instead using a generic off-the-shelf (composer model series).
+
+Training data comes from real agent sessions when an agent searches, opens files, and eventually finds the right code, that trajectory is fed to an LLM that retrospectively ranks what should have been retrieved earlier.
+
+The embedding model is trained to match those rankings a feedback loop grounded in how agents actually behave removing the generic code similarity.
+
+Files are split into **"syntactic chunks"** before embedding.
+
+Chunks + metadata (file hashes, filenames) get embedded and stored server-side, plaintext code used to compute an embedding "ceases to exist after the life of the request".
+
+Storage is in turbopuffer, a serverless vector + full-text search engine built on object storage.
+
+Cursor migrated to it in November 2023 and reports a 20x cost cut vs their prior vector DB.
+
+Semantic search improves offline benchmark accuracy by 12.5% on average (6.5%–23.5% depending on model) on Cursor's internal "Context Bench" eval, and in production A/B tests, increases code retention by 0.3% overall / 2.6% on repos with 1,000+ files, and reduces dissatisfied follow-up requests by 2.2%.
+
+From [Towards Data Science writeup - How Cursor Actually Indexes Your Codebase](https://towardsdatascience.com/how-cursor-actually-indexes-your-codebase/) describes chunking as likely AST-based via a parser like tree-sitter, grouping adjacent syntax-tree nodes (functions, classes, blocks) until a token budget is hit, and illustrates it using an open-source chunking library (Chonkie) as a stand-in.
+
+Cursor only says "syntactic chunks," without naming a parser or library.
+
+The same article describes file-path obfuscation in specific mechanical terms
+
+e.g. `src/payments/invoice_processor.py` → `a9f3/x72k/qp1m8d.f4`.
+
+This level of detail is not confirmed in any Cursor's official source
+
+Cursor's docs and blog only say "file paths are encrypted before being sent" and that embeddings/metadata "may be stored" while plaintext does not persist.
+
+So the assumed confirmed retrieval flow: query text is embedded with the same model, compared against stored vectors, and the vector DB returns ranked candidate chunks by metadata only (masked path + line range).
+
+The actual code text is then pulled back from your local disk, not from the server.
+
+Also about the Re-sync with server time, there is no source that confirms that when cursor run it’s async background embedding pipeline (we don't know when at what certain condition).
+
+## Instant Grep
+
+So even though we have Semantic search which answers "where do we handle auth?"
+
+But we still need to see the actual file and code so Instant Grep answers `handleAuth`.
+
+> The `grep` command (Global Regular Expression Print) is used to search for specific words, phrases, or text patterns within files.
+
+Even a fast tool like `ripgrep` still has to touch every file.
+
+On big monorepos/codebase's, grep routinely exceeds 15 seconds a real problem when an agent calls search constantly, that too in parallel.
+
+So they built their own. (smart folks)
+
+Their March 2026 research post walks through everything they tried before landing on a design:
+
+-   **Trigram indexes** (the Google Code Search lineage) - split text into overlapping 3-character sequences, index them, decompose a regex into required trigrams, intersect posting lists. Works, but common trigrams blow up the lists, and you get stuck between too many false positives or scanning almost everything anyway.
+    
+-   **Suffix arrays** (Nelson Elhage's livegrep) - elegant for a static snapshot of something like the Linux kernel, but expensive to update when the codebase changes every keystroke.
+    
+-   **Trigram + bloom filters** (GitHub's Project Blackbird) - add tiny bloom masks so you query at roughly quadgram precision while storing at trigram cost. Clever but the filters saturate and start matching everything again.
+    
+-   **Sparse n-grams** (ClickHouse + GitHub Code Search) - instead of fixed-width chunks, weight every adjacent character pair and pull out variable-length n-grams at the local weight peaks. Cursor improved ClickHouse's CRC32 weighting with a frequency table built from "a couple terabytes of open-source code," so rare pairs matter more. This is the sweet spot: fewer index lookups at query time.
+    
+
+The architectural choice: unlike semantic search, Instant Grep's index lives entirely on your machine.
+
+Grep has to be fresh the instant a file changes an agent that just wrote code needs to find it immediately.
+
+Embeddings can tolerate slight staleness (newness) because nearby-but-outdated vectors still land in roughly the right neighborhood. Grep cannot. No network round-trip either, because agents fire these searches constantly and in parallel.
+
+On disk it's two pieces: a postings file (all posting lists flushed sequentially) and a sorted lookup table (n-gram hash → offset into that file).
+
+Only the lookup table is memory-mapped into the editor. Binary search finds the offset, then the posting list is read straight from disk. The index itself is anchored to a Git commit, with local uncommitted changes layered on top which is why reloads and startup syncs stay fast.
+
+Cursor's claim on Chromium-scale investigation and refactor tasks with Composer, Instant Grep cuts enough search latency to materially reduce end-to-end task time vs a normal grep tool.
+
+And for privacy: file paths are encrypted before anything hits Cursor's servers. Code content is never stored in plaintext held in memory during indexing, then discarded.
+
+## The Dynamic context discovery
+
+So we have Merkle trees, semantic search, Instant Grep.
+
+But who decides when to use any of this?
+
+That's Dynamic Context Discoverye.
+
+A January 2026 post describes the shift that instead of stuffing the prompt with every instruction, tool descovery, and history dump up front.
+
+Cursor gives the agent small pointers and lets it pull detail on demand via grep, semantic search, or reading files.
+
+Specifically:
+
+-   **Long tool outputs** (shell commands, MCP responses) get written to files instead of truncated inline. The agent tails them and reads more if needed no silent data loss from chopping the middle.
+    
+-   **Chat history after summarization** - the full pre-summary chat is kept as a readable file. If the summary missed something, the agent can search it.
+    
+-   **MCP tool descriptions** sync to a folder (one subfolder per MCP server) instead of landing wholesale in the system prompt. The agent looks up only what's relevant.
+    
+
+> Cursor's A/B: this cut total agent tokens by 46.9% on runs that used an MCP tool.
+
+-   **Terminal sessions** sync to the local filesystem as readable/greppable files - same "prior shell output" CLI agents already see, but pulled on demand instead of injected every turn.
+    
+-   **Agent Skills** work the same way: skill name + description sit in static context, and the agent greps / semantic-searches the full skill body only when it actually needs it.
+    
+
+![Article diagram 3](/blog/imported/cursor-code-indexing/diagram-3.svg)
+
+Dynamic Context Discovery hub
+
+The mental model for me: Cursor doesn't try to decide in advance what context an agent needs.
+
+It builds three fast, narrow retrieval systems Instant Grep, semantic index, file-based context stores and lets the harness/model pick, turn by turn, which one to call.
+
+## Surprise Surprise
+
+Cursor also dropped a widely-shared February 2026 post about running thousands of autonomous coding agents on one research project a from-scratch browser engine hitting ~1,000 commits/hour.
+
+This is not about codebase indexing.
+
+It's multi-agent orchestration: planner/worker roles, instruction design, long-running autonomous loops. Same research team, different line of work.
+
+Worth knowing because casual write-ups mix the two up. The index pipeline and the multi-agent harness experiment are separate and I'll probably dig into that one later.
+
+## Final Note
+
+There are couple of thing's i've intentionally didn't talked about like `.cursorignore` file. The indexing bar in dahsboard etc. but they doesn't play that major role and or are self explaninatory. Below are all of the articles / sources i went through for this blog
+
+## Links
+
+-   Jeremy Stribling, "[Securely indexing large codebases](https://cursor.com/blog/secure-codebase-indexing)".
+    
+-   Cursor, "[Data Use & Privacy Overview](https://cursor.com/data-use)".
+    
+-   turbopuffer, "[Cursor scales code retrieval to 1T+ vectors with turbopuffer](https://turbopuffer.com/customers/cursor)".
+    
+-   Stefan Heule, Emily Jia & Naman Jain, "[Improving agent with semantic search](https://cursor.com/blog/semsearch)".
+    
+-   Kenneth Leung, "[How Cursor Actually Indexes Your Codebase](https://towardsdatascience.com/how-cursor-actually-indexes-your-codebase/)". (third-party analysis; sections on exact chunking method and path-obfuscation encoding are the author's inference/illustration, not verified Cursor internals)
+    
+-   Cursor Docs, "[Search](https://cursor.com/docs/agent/tools/search)".
+    
+-   Vicent Marti, "[Fast regex search: indexing text for agent tools](https://cursor.com/blog/fast-regex-search)".
+    
+-   Jediah Katz, "[Dynamic context discovery](https://cursor.com/blog/dynamic-context-discovery)".
+    
+-   Wilson Lin, "[Towards self-driving codebases](https://cursor.com/blog/self-driving-codebases)".
