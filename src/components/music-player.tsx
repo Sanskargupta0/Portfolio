@@ -99,7 +99,7 @@ function formatTime(seconds: number) {
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
 
-export function MusicPlayer() {
+export function MusicPlayer({ active = true }: { active?: boolean }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const [trackIndex, setTrackIndex] = useState(0);
@@ -186,6 +186,10 @@ export function MusicPlayer() {
     return () => window.clearInterval(id);
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (!active && ready) playerRef.current?.pauseVideo();
+  }, [active, ready]);
+
   const goToTrack = (index: number) => {
     const next = (index + TRACKS.length) % TRACKS.length;
     const wasPlaying = isPlaying;
@@ -225,9 +229,9 @@ export function MusicPlayer() {
   };
 
   return (
-    <div className="relative w-full min-w-0">
-      <div className="flex items-center gap-4">
-        <div className="relative h-16 w-16 flex-none" aria-hidden="true">
+    <div className="relative h-20 w-full min-w-0 rounded-xl bg-muted/30 p-2" data-music-player>
+      <div className="flex h-full items-center gap-3">
+        <div className="relative h-14 w-14 flex-none" aria-hidden="true">
           <div className="absolute -bottom-2 left-1/2 h-3 w-[85%] -translate-x-1/2 rounded-[50%] bg-black/70 blur-md" />
           <div
             className="relative h-full w-full rounded-full"
@@ -317,32 +321,31 @@ export function MusicPlayer() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-            Now Playing
-          </p>
-          <div className="mt-0.5 flex flex-col items-start gap-2">
-            <p className="w-full truncate text-[13px] font-medium text-foreground">{track.title}</p>
-            <div className="flex flex-none items-center gap-3">
+          <div className="flex min-w-0 items-center gap-1">
+            <p className="min-w-0 flex-1 truncate text-xs font-medium text-foreground">
+              {track.title}
+            </p>
+            <div className="flex flex-none items-center gap-1">
               <button
                 disabled={!ready || unavailable}
                 type="button"
                 onClick={() => goToTrack(trackIndex - 1)}
                 aria-label="Previous track"
-                className="cursor-pointer text-muted-foreground transition-colors hover:text-foreground disabled:cursor-wait disabled:opacity-40"
+                className="flex size-6 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground disabled:cursor-wait disabled:opacity-40"
               >
-                <SkipBack size={16} fill="currentColor" />
+                <SkipBack size={13} fill="currentColor" />
               </button>
               <button
                 disabled={!ready || unavailable}
                 type="button"
                 onClick={togglePlay}
                 aria-label={isPlaying ? "Pause" : "Play"}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-neutral-600 text-foreground transition-all hover:scale-105 hover:border-neutral-200 active:scale-95 disabled:cursor-wait disabled:opacity-40"
+                className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-neutral-600 text-foreground transition-all hover:scale-105 hover:border-neutral-200 active:scale-95 disabled:cursor-wait disabled:opacity-40"
               >
                 {isPlaying ? (
-                  <Pause size={16} fill="currentColor" />
+                  <Pause size={13} fill="currentColor" />
                 ) : (
-                  <Play size={16} fill="currentColor" className="ml-0.5" />
+                  <Play size={13} fill="currentColor" className="ml-0.5" />
                 )}
               </button>
               <button
@@ -350,13 +353,24 @@ export function MusicPlayer() {
                 type="button"
                 onClick={() => goToTrack(trackIndex + 1)}
                 aria-label="Next track"
-                className="cursor-pointer text-muted-foreground transition-colors hover:text-foreground disabled:cursor-wait disabled:opacity-40"
+                className="flex size-6 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground disabled:cursor-wait disabled:opacity-40"
               >
-                <SkipForward size={16} fill="currentColor" />
+                <SkipForward size={13} fill="currentColor" />
               </button>
             </div>
           </div>
-          <p className="truncate font-mono text-[11px] text-muted-foreground">{track.artist}</p>
+          {unavailable ? (
+            <a
+              className="block truncate text-[10px] leading-3 text-muted-foreground underline"
+              href={`https://www.youtube.com/watch?v=${track.videoId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Listen on YouTube
+            </a>
+          ) : (
+            <p className="truncate text-[10px] leading-3 text-muted-foreground">{track.artist}</p>
+          )}
 
           <div
             tabIndex={ready && duration > 0 ? 0 : -1}
@@ -383,7 +397,7 @@ export function MusicPlayer() {
             aria-valuemin={0}
             aria-valuemax={Math.round(duration)}
             aria-valuenow={Math.round(currentTime)}
-            className="group mt-3 flex h-4 cursor-pointer items-center"
+            className="group flex h-3 cursor-pointer items-center"
             onPointerDown={(e) => {
               e.currentTarget.setPointerCapture(e.pointerId);
               seek(e.clientX, e.currentTarget);
@@ -400,23 +414,13 @@ export function MusicPlayer() {
             </div>
           </div>
 
-          <div className="mt-1 flex items-center justify-between font-mono text-[10px] text-muted-foreground">
+          <div className="flex items-center justify-between font-mono text-[9px] leading-[10px] text-muted-foreground">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
       </div>
 
-      {unavailable && (
-        <a
-          className="mt-2 block text-xs text-muted-foreground underline"
-          href={`https://www.youtube.com/watch?v=${track.videoId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Listen on YouTube
-        </a>
-      )}
       <div
         className="pointer-events-none absolute left-0 top-0 h-[200px] w-[200px] overflow-hidden opacity-0"
         aria-hidden="true"
