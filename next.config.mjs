@@ -35,6 +35,31 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 const nextConfig = {
   webpack: (config, { dev }) => {
     if (dev) {
+      // Webpack cannot statically follow these libraries' runtime imports.
+      // Filter only their documented cache-scan notices, preserving the cache
+      // and every other infrastructure warning. See velite.js.org/guide/with-nextjs.
+      config.plugins.push({
+        apply(compiler) {
+          compiler.hooks.infrastructureLog.tap(
+            "FilterDynamicImportCacheNotices",
+            (name, type, args) => {
+              if (
+                name !== "webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo" ||
+                type !== "warn"
+              )
+                return;
+              const message = args.map(String).join(" ");
+              const isJiti =
+                /[\\/]node_modules[\\/]jiti[\\/]lib[\\/]jiti\.mjs/.test(message) &&
+                message.includes("failed at 'import(id)'");
+              const isVelite =
+                /[\\/]node_modules[\\/]velite[\\/]dist[\\/]velite-[^\\/]+\.js/.test(message) &&
+                message.includes("failed at 'import(configUrl.href)'");
+              if (message.startsWith("Parsing of ") && (isJiti || isVelite)) return true;
+            }
+          );
+        },
+      });
       // Avoid PDF.js internal Webpack runtime names colliding with Next 14's
       // eval-based development source maps. The minified build is the same version.
       config.resolve.alias = {
