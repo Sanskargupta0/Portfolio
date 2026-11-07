@@ -27,6 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <noscript>
+          <style>{"[data-site-loader] { display: none !important; }"}</style>
+        </noscript>
         {renderSchemaTags()}
 
         <RootProviders>{children}</RootProviders>

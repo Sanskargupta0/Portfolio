@@ -5,6 +5,7 @@ import PetCat from "~/components/pet-cat";
 import ScrollProgress from "~/components/scroll-progress";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import TopLoader from "~/components/ui/top-loader";
+import LoadingScreen from "~/components/ui/loading-screen";
 import ReactQueryProvider from "./react-query";
 import { Toaster } from "~/components/ui/sonner";
 import I18nProvider from "~/components/providers/i18n-provider";
@@ -19,6 +20,7 @@ const RootProviders = ({ children }: { children: ReactNode }) => {
             <PetCat />
             <ScrollProgress />
             <TopLoader />
+            <LoadingScreen />
             {children}
             <Toaster />
           </TooltipProvider>
