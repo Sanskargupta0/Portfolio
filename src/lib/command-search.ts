@@ -1,3 +1,4 @@
+import { getProjectHref } from "~/lib/project-links";
 import { posts } from "#site/content";
 import projects from "~/components/project/_project-mock";
 import type { CommandSearchEntry } from "~/types/command-search";
@@ -26,7 +27,7 @@ export function getCommandSearchEntries(): CommandSearchEntry[] {
       title: project.title,
       description: project.description,
       keywords: project.stacks.join(" "),
-      href: "/projects?search=" + encodeURIComponent(project.title),
+      href: getProjectHref(project.title),
     })),
     ...posts
       .filter((post) => post.published && post.slugAsParams.startsWith("en/"))
