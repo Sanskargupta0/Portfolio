@@ -1,3 +1,5 @@
+import projects from "~/components/project/_project-mock";
+import { getProjectHref } from "~/lib/project-links";
 import { posts } from "#site/content";
 import { slug } from "github-slugger";
 import { MetadataRoute } from "next";
@@ -15,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...["", "/blog", "/projects", "/tags", "/resume"].map((path) => ({ url: BasePath(path) })),
+    ...projects.map((project) => ({ url: BasePath(getProjectHref(project.title)) })),
     ...blogPosts,
     ...tagPages,
   ];

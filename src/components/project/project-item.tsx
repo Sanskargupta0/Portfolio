@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { getProjectHref } from "~/lib/project-links";
 import Image from "next/image";
 import React from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -24,31 +26,42 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
   return (
     <li role="listitem">
       <div className="grid gap-4 rounded-md">
-        <div className="relative aspect-video">
+        <Link
+          href={getProjectHref(title)}
+          aria-label={"Read about " + title}
+          className="el-focus-styles relative block aspect-video rounded-md"
+        >
           <Image
-            alt={`${title} not found`}
+            alt={`${title} project preview`}
             priority
             placeholder="blur"
             src={cover}
             className="size-full rounded-md"
           />
-        </div>
+        </Link>
 
         <hgroup className="space-y-2 sm:space-y-1">
-          <h2 className="font-ubuntu text-base font-medium">{title}</h2>
+          <h2 className="font-ubuntu text-base font-medium">
+            <Link
+              href={getProjectHref(title)}
+              className="el-focus-styles rounded-sm hover:text-ring"
+            >
+              {title}
+            </Link>
+          </h2>
 
           <div className="space-y-2">
             <p className={"text-xs text-ring"} aria-label="project stacks">
               {stacks.join(" / ")}
             </p>
-            
+
             <div className="flex flex-wrap gap-1" aria-label="project categories">
               {categories.map((category) => (
                 <span
                   key={category}
-                  className="px-2 py-0.5 text-xs rounded-full bg-accent text-accent-foreground capitalize"
+                  className="rounded-full bg-accent px-2 py-0.5 text-xs capitalize text-accent-foreground"
                 >
-                  {category.replace('-', ' ')}
+                  {category.replace("-", " ")}
                 </span>
               ))}
             </div>
@@ -58,10 +71,16 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
             {description}
           </p>
 
-          <div className="!mt-2 flex items-center gap-4">
+          <div className="!mt-2 flex flex-wrap items-center gap-4">
+            <Link
+              href={getProjectHref(title)}
+              className="el-focus-styles rounded-sm text-sm text-ring underline underline-offset-4"
+            >
+              Read project
+            </Link>
             {deployedURL && (
               <CustomLink
-                aria-label={`visit ${title} live URL}`}
+                aria-label={`visit ${title} live URL`}
                 href={deployedURL}
                 className={linkClass}
               >
