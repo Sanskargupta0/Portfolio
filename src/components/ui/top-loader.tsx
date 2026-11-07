@@ -83,6 +83,7 @@ const RouteChangeLoader = () => {
     const handleLinkClick = (e: Event) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
+      if (link?.hasAttribute("download") || (link?.target && link.target !== "_self")) return;
       
       if (link && link.href) {
         const url = new URL(link.href);

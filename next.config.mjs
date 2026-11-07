@@ -25,12 +25,6 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/resume",
-        destination:
-          "https://github.com/Sanskargupta0/Sanskargupta0/raw/main/Sanskar-Gupta.pdf",
-        permanent: true,
-      },
-      {
         source: "/linkedin",
         destination: "https://www.linkedin.com/in/Sanskargupta0/",
         permanent: true,

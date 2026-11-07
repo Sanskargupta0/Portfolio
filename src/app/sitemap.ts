@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ).map((tag) => ({ url: BasePath(`/tags/${tag}`) }));
 
   return [
-    ...["", "/blog", "/projects", "/tags"].map((path) => ({ url: BasePath(path) })),
+    ...["", "/blog", "/projects", "/tags", "/resume"].map((path) => ({ url: BasePath(path) })),
     ...blogPosts,
     ...tagPages,
   ];
