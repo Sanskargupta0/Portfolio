@@ -5,24 +5,29 @@ import { portfolioRepositoryUrl } from "~/constants/portfolio";
 import { useCommandMenu } from "~/components/command-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
+export function PortfolioStar() {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <a
+          href={portfolioRepositoryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Star this portfolio on GitHub"
+          className="el-focus-styles inline-grid size-5 place-items-center rounded-sm align-middle text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <Star aria-hidden="true" className="size-4" />
+        </a>
+      </TooltipTrigger>
+      <TooltipContent>Star this portfolio</TooltipContent>
+    </Tooltip>
+  );
+}
+
 export default function PortfolioActions() {
   const openSearch = useCommandMenu();
   return (
     <div className="flex shrink-0 items-center gap-2">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a
-            href={portfolioRepositoryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Star this portfolio on GitHub"
-            className="el-focus-styles grid size-5 place-items-center rounded-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <Star aria-hidden="true" className="size-4" />
-          </a>
-        </TooltipTrigger>
-        <TooltipContent>Star this portfolio</TooltipContent>
-      </Tooltip>
       <button
         type="button"
         onClick={openSearch}

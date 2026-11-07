@@ -4,6 +4,6 @@ const githubPdfUrl =
 export const resumeConfig = {
   viewUrl: "https://github.com/Sanskargupta0/Sanskargupta0/blob/main/Sanskar-Gupta.pdf",
   downloadUrl: githubPdfUrl,
-  previewUrl: "https://docs.google.com/gview?embedded=true&url=" + encodeURIComponent(githubPdfUrl),
+  previewUrl: githubPdfUrl,
   filename: "Sanskar-Gupta.pdf",
 };
