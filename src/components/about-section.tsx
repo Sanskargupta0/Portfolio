@@ -9,7 +9,7 @@ import livethecode from "~/assets/images/live-the-code.webp";
 const AboutSection = () => {
 
   return (
-    <section className="grid gap-8 sm:gap-4 md:grid-cols-3" aria-label="About">
+    <section id="about" className="grid gap-8 sm:gap-4 md:grid-cols-3" aria-label="About">
   <div className="order-2 space-y-3 sm:order-1 md:col-span-2">
     <h1 className="font-ubuntu text-lg font-semibold sm:text-xl">
       Sanskar Gupta <span className="text-italic font-normal text-[#00adb5]">aka Ayush</span>

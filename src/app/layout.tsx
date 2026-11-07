@@ -1,3 +1,4 @@
+import { getCommandSearchEntries } from "~/lib/command-search";
 import { Analytics } from "@vercel/analytics/react";
 import { fontSans } from "~/components/ui/fonts";
 import { getSEOTags, renderSchemaTags } from "~/lib/seo";
@@ -32,7 +33,7 @@ export default function RootLayout({
         </noscript>
         {renderSchemaTags()}
 
-        <RootProviders>{children}</RootProviders>
+        <RootProviders searchEntries={getCommandSearchEntries()}>{children}</RootProviders>
 
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>

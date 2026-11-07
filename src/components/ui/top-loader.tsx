@@ -40,13 +40,18 @@ const RouteChangeLoader = () => {
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
+    let safetyTimeoutId: NodeJS.Timeout;
 
     const handleStart = () => {
+      clearTimeout(timeoutId);
+      clearTimeout(safetyTimeoutId);
+      safetyTimeoutId = setTimeout(() => setIsLoading(false), 15000);
       setIsLoading(true);
       setLoadingText("Loading");
     };
 
     const handleComplete = () => {
+      clearTimeout(safetyTimeoutId);
       // Minimum loading time for better UX
       timeoutId = setTimeout(() => {
         setIsLoading(false);
@@ -96,15 +101,18 @@ const RouteChangeLoader = () => {
       }
     };
 
+    window.addEventListener("portfolio:navigation-start", handleStart);
     window.addEventListener("popstate", handlePopState);
     document.addEventListener("click", handleLinkClick);
 
     return () => {
       history.pushState = originalPushState;
       history.replaceState = originalReplaceState;
+      window.removeEventListener("portfolio:navigation-start", handleStart);
       window.removeEventListener("popstate", handlePopState);
       document.removeEventListener("click", handleLinkClick);
       if (timeoutId) clearTimeout(timeoutId);
+      if (safetyTimeoutId) clearTimeout(safetyTimeoutId);
     };
   }, []);
 
