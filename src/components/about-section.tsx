@@ -1,7 +1,7 @@
 "use client";
 
 import { PortfolioStar } from "~/components/portfolio-actions";
-import MusicPlayer from "~/components/music-player";
+import ListeningWidget from "~/components/listening-widget";
 import ProfileHeadline from "~/components/profile-headline";
 import { cn } from "~/lib/utils";
 import { typo } from "./ui/typograpghy";
@@ -61,9 +61,11 @@ const AboutSection = () => {
         </p>
       </div>
 
-      <div className="order-1 min-w-0 space-y-6 sm:order-2 sm:hidden md:block">
-        <ProfilePicture />
-        <MusicPlayer />
+      <div className="order-1 min-w-0 space-y-6 sm:order-2">
+        <div className="sm:hidden md:block">
+          <ProfilePicture />
+        </div>
+        <ListeningWidget />
       </div>
     </section>
   );
