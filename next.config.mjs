@@ -3,6 +3,10 @@ import { fileURLToPath } from "node:url";
 import createJiti from "jiti";
 const jiti = createJiti(fileURLToPath(import.meta.url));
 
+// Keep Next.js and Velite on the project's Sharp installation. Vercel's
+// global Sharp override loads a second native libvips and can crash the build.
+process.env.NEXT_SHARP_PATH = "sharp";
+
 jiti("./src/constants/env");
 
 const isDev = process.argv.indexOf("dev") !== -1;
@@ -29,9 +33,6 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // Use React-PDF's documented Terser fallback for Next.js versions before 15.
-  // Avoid native SWC minifier crashes while keeping production JS minified.
-  swcMinify: false,
   webpack: (config, { dev }) => {
     if (dev) {
       // Avoid PDF.js internal Webpack runtime names colliding with Next 14's
