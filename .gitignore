@@ -48,3 +48,6 @@ next-env.d.ts
 .velite
 .env
 i18n.cache
+
+# Generated from the installed PDF.js package at dev/build time
+/public/pdfjs/

@@ -1,3 +1,4 @@
+import ResumePreview from "~/components/resume-preview";
 import { Download, ExternalLink } from "lucide-react";
 import { buttonVariants } from "~/components/ui/button";
 import { resumeConfig } from "~/constants/resume";
@@ -52,11 +53,7 @@ export default function ResumePage() {
         </div>
         <hr className="border-border" />
         <div className="mx-auto max-w-2xl space-y-3">
-          <iframe
-            src={resumeConfig.previewUrl}
-            title="Sanskar Gupta resume PDF preview"
-            className="min-h-[100dvh] w-full"
-          />
+          <ResumePreview />
           <p className="text-center text-sm text-muted-foreground">
             If the preview is unavailable, open or download the PDF above.
           </p>

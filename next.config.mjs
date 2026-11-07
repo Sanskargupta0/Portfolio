@@ -1,3 +1,4 @@
+import { cpSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import createJiti from "jiti";
 const jiti = createJiti(fileURLToPath(import.meta.url));
@@ -6,6 +7,18 @@ jiti("./src/constants/env");
 
 const isDev = process.argv.indexOf("dev") !== -1;
 const isBuild = process.argv.indexOf("build") !== -1;
+
+// Serve the matching PDF.js worker and rendering assets without passing the
+// prebuilt ES module worker through Next 14's JavaScript minifier.
+if (isDev || isBuild) {
+  const pdfAssets = new URL("./public/pdfjs/", import.meta.url);
+  mkdirSync(pdfAssets, { recursive: true });
+  for (const asset of ["build/pdf.worker.min.mjs", "cmaps", "standard_fonts", "wasm", "LICENSE"]) {
+    const source = new URL(`./node_modules/pdfjs-dist/${asset}`, import.meta.url);
+    const destination = new URL(asset.replace("build/", ""), pdfAssets);
+    cpSync(source, destination, { recursive: true });
+  }
+}
 
 if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
   process.env.VELITE_STARTED = "1";
@@ -16,6 +29,19 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Avoid PDF.js internal Webpack runtime names colliding with Next 14's
+      // eval-based development source maps. The minified build is the same version.
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "pdfjs-dist$": fileURLToPath(
+          new URL("./node_modules/pdfjs-dist/build/pdf.min.mjs", import.meta.url)
+        ),
+      };
+    }
+    return config;
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
