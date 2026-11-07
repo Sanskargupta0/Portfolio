@@ -1,4 +1,6 @@
 "use client";
+import { CommandMenuProvider } from "~/components/command-menu";
+import type { CommandSearchEntry } from "~/types/command-search";
 import { ReactNode } from "react";
 
 import PetCat from "~/components/pet-cat";
@@ -11,18 +13,32 @@ import { Toaster } from "~/components/ui/sonner";
 import I18nProvider from "~/components/providers/i18n-provider";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 
-const RootProviders = ({ children }: { children: ReactNode }) => {
+const RootProviders = ({
+  children,
+  searchEntries,
+}: {
+  children: ReactNode;
+  searchEntries: CommandSearchEntry[];
+}) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" storageKey="portfolioTheme" enableSystem disableTransitionOnChange>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      storageKey="portfolioTheme"
+      enableSystem
+      disableTransitionOnChange
+    >
       <I18nProvider>
         <ReactQueryProvider>
           <TooltipProvider>
-            <PetCat />
-            <ScrollProgress />
-            <TopLoader />
-            <LoadingScreen />
-            {children}
-            <Toaster />
+            <CommandMenuProvider entries={searchEntries}>
+              <PetCat />
+              <ScrollProgress />
+              <TopLoader />
+              <LoadingScreen />
+              {children}
+              <Toaster />
+            </CommandMenuProvider>
           </TooltipProvider>
         </ReactQueryProvider>
       </I18nProvider>
