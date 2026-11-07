@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { resumeConfig } from "~/constants/resume";
 
 const DownloadResumeBtn = () => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -8,10 +9,10 @@ const DownloadResumeBtn = () => {
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
-      const resumeUrl = "https://github.com/Sanskargupta0/Sanskargupta0/raw/main/Sanskar-Gupta.pdf";
+      const resumeUrl = resumeConfig.downloadUrl;
       const link = document.createElement("a");
       link.href = resumeUrl;
-      link.download = "Sanskar-Gupta-Resume.pdf";
+      link.download = resumeConfig.filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
