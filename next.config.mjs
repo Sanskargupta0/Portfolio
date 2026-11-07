@@ -29,6 +29,9 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  // Use React-PDF's documented Terser fallback for Next.js versions before 15.
+  // Avoid native SWC minifier crashes while keeping production JS minified.
+  swcMinify: false,
   webpack: (config, { dev }) => {
     if (dev) {
       // Avoid PDF.js internal Webpack runtime names colliding with Next 14's
